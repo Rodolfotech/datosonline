@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@import "@fontsource/archivo-black";
+@import "@fontsource-variable/inter";
+
+/* Tokens globales de marca.
+   Cada token genera utilidades de Tailwind: bg-ground, text-ink, border-accent,
+   font-display, etc. */
+@theme {
+  /* Colores de marca */
+  --color-ground: #00b2ff; /* celeste: portada, fondo de fotos, "Online" del logo */
+  --color-ground-2: #2cc1ff; /* celeste claro: círculos decorativos, degradado de íconos */
+  --color-ink: #060b1a; /* azul casi negro: navbar, footer, textos, bordes y sombras */
+  --color-navy: #0b1736; /* azul marino: hover del menú, divisor del footer */
+  --color-paper: #ffffff; /* blanco: cards, buscador, textos sobre fondo oscuro */
+  --color-accent: #ff5f1f; /* naranja: botón "Ver precio", líneas, categoría activa */
+  --color-accent-2: #ff7a40; /* naranja claro: hover del botón "Ver precio" */
+  --color-gray-1: #eef0f4; /* gris muy claro: fondo general de la página */
+  --color-gray-2: #d9dce3; /* gris claro: sin uso por ahora */
+
+  /* Colores de etiquetas */
+  --color-c-yellow: #ffe500; /* "Más vendido" (tono top) */
+  --color-c-green: #34c759; /* "Nuevo" (tono new) */
+  --color-c-violet: #6a4dff; /* "Buen precio" (tono value) */
+  --color-c-pink: #ff2d55; /* sin uso por ahora */
+
+  /* Tipografías */
+  --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Alias con los nombres originales, para usarlos en CSS propio: var(--ground) */
+:root {
+  --ground: var(--color-ground);
+  --ground-2: var(--color-ground-2);
+  --ink: var(--color-ink);
+  --navy: var(--color-navy);
+  --paper: var(--color-paper);
+  --accent: var(--color-accent);
+  --accent-2: var(--color-accent-2);
+  --gray-1: var(--color-gray-1);
+  --gray-2: var(--color-gray-2);
+  --c-yellow: var(--color-c-yellow);
+  --c-green: var(--color-c-green);
+  --c-violet: var(--color-c-violet);
+  --c-pink: var(--color-c-pink);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-gray-1);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+
+  /* Content protection: nothing on the page can be selected with the mouse. */
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Form fields stay usable: the visitor must be able to select what they type. */
+  input,
+  textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Photos ignore the pointer, so they cannot be dragged out, opened in another
+     tab from the right-click menu or saved with a long press on a phone. */
+  img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+  }
+}
