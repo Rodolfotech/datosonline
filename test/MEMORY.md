@@ -21,6 +21,9 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 - Fotos: van en `img/<código en minúsculas>/` en WebP (máx. 800 px) y se listan en `images`; con varias, la card muestra una galería con flechas y deslizamiento. El campo antiguo `image` sigue funcionando.
 - Versiones: un producto con un enlace de afiliado por versión usa `variants: [{ label, url }]`; la card muestra un selector y "Ver precio" abre el enlace de la versión elegida (la primera viene marcada). `url` sigue sirviendo para productos de un solo enlace.
 - Protección de contenido (pedido del dueño): `user-select: none` en toda la página y fotos sin eventos de puntero, en `src/style.css`. Es disuasivo: no impide capturas ni abrir la URL directa de una foto.
+- Popover reutilizable: `<info-popover text="...">` (`src/components/popover.js`) envuelve cualquier enlace o botón y muestra el texto al pasar el mouse o enfocar con teclado. Se usa en "Ver precio" para avisar que redirige a Mercado Libre. En pantallas táctiles no hay hover; ahí informa la nota bajo el botón.
+- Características de la card: ocultas al inicio tras el botón "Ver características"; se despliegan mientras el mouse está encima (solo con puntero) y quedan abiertas con un clic (necesario en táctiles y teclado). Pedido del dueño.
+- La barra de scroll de la página está oculta por CSS (pedido del dueño); el desplazamiento sigue funcionando.
 - Fuentes locales en `src/fonts/` (Archivo Black e Inter variable, subconjunto latino), cargadas con `@font-face`; no se usa Google Fonts.
 - Se quitaron Tailwind y Vite (pedido del dueño, 2026-11-15) porque GitHub Pages y Live Server sirven los archivos tal cual y no encontraban los estilos.
 

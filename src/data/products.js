@@ -17,7 +17,7 @@ export const products = [
     category: "tecnologia",
     subcategory: "Celulares",
     features: ["Chip A19 Pro con refrigeración", "Triple cámara 48 MP", 'Pantalla OLED 6,9"'],
-    badge: { label: "Reel nuevo", tone: "hot" },
+    badge: { label: "Apple Tienda Oficial", tone: "hot" },
     images: [
       "img/do-001/lineup.webp",
       "img/do-001/duo.webp",
@@ -50,11 +50,11 @@ export const products = [
       "img/do-004/side.webp",
       "img/do-004/serie.webp",
     ],
-    url: "https://meli.la/2m39efj",
+    variants: [{ label: "256 GB", url: "https://meli.la/2m39efj" }],
   },
   {
     code: "DO-007",
-    title: "Colchón Emma ThermoSync 2 plazas",
+    title: "Colchón Emma Hybrid Premium 2 Plazas",
     category: "colchones",
     subcategory: "2 plazas",
     features: [
