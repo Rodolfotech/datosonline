@@ -6,10 +6,10 @@
 // variants: use it instead of `url` when each version has its own affiliate
 //         link: [{ label: "512 GB", url }, ...]. The first one is preselected.
 // badge: { label, tone } where tone is "top", "hot", "new" or "value".
-// images: product photos, served from public/ (public/img/do-001/a.webp is
-//         "img/do-001/a.webp", without a leading slash so it also works
-//         when the site is published in a subfolder). The first one is the cover; with several the
-//         card shows a gallery, and without any it shows a placeholder.
+// images: product photos from the img/ folder, written without a leading
+//         slash ("img/do-001/a.webp") so they also work when the site is
+//         published in a subfolder. The first one is the cover; with several
+//         the card shows a gallery, and without any it shows a placeholder.
 export const products = [
   {
     code: "DO-001",
