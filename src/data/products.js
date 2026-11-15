@@ -14,8 +14,7 @@ export const products = [
   {
     code: "DO-001",
     title: "iPhone 17 Pro Max",
-    category: "tecnologia",
-    subcategory: "Celulares",
+    category: "smartphones",
     features: ["Chip A19 Pro con refrigeración", "Triple cámara 48 MP", 'Pantalla OLED 6,9"'],
     badge: { label: "Apple Tienda Oficial", tone: "hot" },
     images: [
@@ -33,8 +32,7 @@ export const products = [
   {
     code: "DO-004",
     title: "Samsung Galaxy S26 Ultra",
-    category: "tecnologia",
-    subcategory: "Celulares",
+    category: "smartphones",
     features: [
       'Pantalla gigante de 6,9"',
       "El procesador más potente de Samsung, con 12 GB de RAM",
@@ -51,6 +49,30 @@ export const products = [
       "img/do-004/serie.webp",
     ],
     variants: [{ label: "256 GB", url: "https://meli.la/2m39efj" }],
+  },
+  {
+    code: "DO-005",
+    title: "PC Gamer AMD Ryzen 7 5700G",
+    category: "pc-gamer",
+    subcategory: "Computadores",
+    features: [
+      "Procesador AMD Ryzen 7 5700G de 8 núcleos",
+      "Gráficos integrados Radeon Vega 8",
+      "16 GB de RAM y disco M.2 de 1 TB",
+      "Adaptador Wi-Fi y Bluetooth incluido",
+      "Fuente certificada 80 Plus y Windows 11 Pro original",
+      "Espacio para sumar una tarjeta gráfica dedicada",
+    ],
+    images: [
+      "img/do-005/pack.webp",
+      "img/do-005/torre-kit.webp",
+      "img/do-005/torre.webp",
+      "img/do-005/torre-lateral.webp",
+      "img/do-005/monitor.webp",
+      "img/do-005/incluye.webp",
+      "img/do-005/rendimiento.webp",
+    ],
+    url: "https://meli.la/2QGS1m7",
   },
   {
     code: "DO-007",
@@ -71,23 +93,5 @@ export const products = [
       "img/do-007/funda-textura.webp",
     ],
     url: "https://meli.la/2VxPqC7",
-  },
-  {
-    code: "DO-003",
-    title: "Mercado Pago Point Smart 2 · Máquina de pagos",
-    category: "tecnologia",
-    subcategory: "Pagos y negocio",
-    features: ["Acepta débito, crédito y QR", "Imprime boletas", "Dinero al instante"],
-    badge: { label: "Más vendido", tone: "top" },
-    url: "https://www.mercadolibre.cl/",
-  },
-  {
-    code: "DO-002",
-    title: "Caja de luz LED 30×30 cm · Mini estudio fotográfico",
-    category: "tecnologia",
-    subcategory: "Fotografía",
-    features: ["Fotos de producto con fondo limpio", "Plegable y portátil", "Incluye fondos de colores"],
-    badge: { label: "Ideal emprendedores", tone: "value" },
-    url: "https://www.mercadolibre.cl/",
   },
 ];

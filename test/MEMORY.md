@@ -36,4 +36,4 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 ## Próximos pasos
 - Confirmar la URL real de Instagram en `src/data/site.js`.
 - Construir el buscador de la portada con `id="buscador"` (el ícono de lupa del navbar apunta ahí).
-- DO-001, DO-004 y DO-007 ya tienen enlaces reales (meli.la); reemplazar las URL de ejemplo de DO-002 y DO-003 y agregar las fotos de los otros productos (DO-001 ya tiene).
+- Categorías actuales: Smartphones (antes "Tecnología"), Colchones y PC Gamer. Se quitaron los productos de ejemplo DO-002 y DO-003 (sin fotos ni enlace real). Todos los productos tienen enlace de afiliado real (meli.la).

@@ -4,7 +4,7 @@ import { products } from "../data/products.js";
 import { escapeHtml } from "../lib/categories.js";
 import { getVisibleProducts, productCountLabel } from "../lib/products.js";
 
-// <product-grid category="tecnologia"></product-grid>
+// <product-grid category="smartphones"></product-grid>
 // Without `category` it shows every product.
 class ProductGrid extends HTMLElement {
   static observedAttributes = ["category"];

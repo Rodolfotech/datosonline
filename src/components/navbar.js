@@ -13,7 +13,7 @@ function categoryLink(category, activeSlug) {
   return `<li><a href="${categoryUrl(category.slug)}" class="pill"${isActive ? ' aria-current="page"' : ""}>${escapeHtml(category.name)}</a></li>`;
 }
 
-// <site-navbar active-category="tecnologia"></site-navbar>
+// <site-navbar active-category="smartphones"></site-navbar>
 class SiteNavbar extends HTMLElement {
   static observedAttributes = ["active-category"];
 
