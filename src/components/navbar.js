@@ -97,7 +97,7 @@ class SiteNavbar extends HTMLElement {
                 ${moreMenu}
               </ul>
             </nav>
-            <a href="/#buscador" aria-label="Buscar productos" class="${ICON_BUTTON}">${SEARCH_ICON}</a>
+            <a href="./#buscador" aria-label="Buscar productos" class="${ICON_BUTTON}">${SEARCH_ICON}</a>
             <button type="button" data-menu-toggle aria-expanded="false" aria-controls="navbar-mobile-menu" aria-label="Menú de categorías" class="${ICON_BUTTON} cursor-pointer md:hidden">${MENU_ICON}</button>
           </div>
         </div>
