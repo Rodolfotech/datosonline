@@ -1,4 +1,5 @@
-# Builds the site with Vite and publishes the dist/ folder to GitHub Pages.
+# Publishes the site to GitHub Pages. There is no build step: the site is plain
+# HTML, CSS and JavaScript, so only the files the browser needs are uploaded.
 name: Deploy to GitHub Pages
 
 on:
@@ -20,17 +21,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm test
-      - run: pnpm build
+      - run: node --test
+      - name: Collect the site files
+        run: |
+          mkdir -p _site/src
+          cp -r index.html img _site/
+          cp -r src/style.css src/main.js src/components src/data src/lib src/fonts _site/src/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

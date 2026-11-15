@@ -1,24 +1,13 @@
 import { categories } from "../data/categories.js";
 import { escapeHtml } from "../lib/categories.js";
 
-const FOCUS_RING = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const SHARE_FEEDBACK_MS = 2500;
 
-// Text is ink on the light tones and paper on violet, to keep it readable.
-const BADGE_TONE_CLASSES = {
-  top: "bg-c-yellow text-ink",
-  hot: "bg-accent text-ink",
-  new: "bg-c-green text-ink",
-  value: "bg-c-violet text-paper",
-};
-
-const EXTERNAL_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
-const SHARE_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.7M8.2 13.2l7.6 3.7"/></svg>`;
-const CHEVRON_LEFT_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>`;
-const CHEVRON_RIGHT_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>`;
-const GALLERY_BUTTON = `absolute top-1/2 grid size-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full border-2 border-ink bg-paper text-ink transition-colors hover:bg-gray-1 ${FOCUS_RING}`;
-const VARIANT_BUTTON = `min-h-11 cursor-pointer rounded-full border-2 border-ink px-4 text-[15px] font-bold transition-colors aria-pressed:bg-ink aria-pressed:text-paper not-aria-pressed:bg-paper not-aria-pressed:hover:bg-gray-1 ${FOCUS_RING}`;
-const PLACEHOLDER_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="size-20 text-gray-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5.5-5 3.5 3 2.5-2 4.5 4"/></svg>`;
+const EXTERNAL_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
+const SHARE_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.7M8.2 13.2l7.6 3.7"/></svg>`;
+const CHEVRON_LEFT_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>`;
+const CHEVRON_RIGHT_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>`;
+const PLACEHOLDER_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="card__placeholder" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5.5-5 3.5 3 2.5-2 4.5 4"/></svg>`;
 
 function categoryName(slug) {
   return categories.find((category) => category.slug === slug)?.name ?? "";
@@ -41,7 +30,6 @@ class ProductCard extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add("block", "h-full");
     this.addEventListener("click", this.handleClick);
     // A broken photo falls back to the placeholder instead of a broken image.
     this.addEventListener("error", this.handleImageError, true);
@@ -130,57 +118,55 @@ class ProductCard extends HTMLElement {
 
     const hasGallery = images.length > 1;
     const photoAlt = (index) => (hasGallery ? `${safeTitle}, foto ${index + 1} de ${images.length}` : safeTitle);
-    // Leaves room for the badges on top and, in a gallery, the arrows and counter.
-    const photoPadding = hasGallery ? "px-11 pb-9" : "px-4 pb-4";
     const media = images.length === 0 ? PLACEHOLDER_ICON : `
-      <ul data-gallery class="absolute inset-0 flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] motion-reduce:scroll-auto">
-        ${images.map((image, index) => `<li class="relative size-full shrink-0 snap-center"><img src="${escapeHtml(image)}" alt="${photoAlt(index)}" loading="lazy" decoding="async" class="absolute inset-0 size-full object-contain pt-12 ${photoPadding}" /></li>`).join("")}
+      <ul data-gallery class="card__gallery${hasGallery ? " card__gallery--multiple" : ""}">
+        ${images.map((image, index) => `<li class="card__slide"><img src="${escapeHtml(image)}" alt="${photoAlt(index)}" loading="lazy" decoding="async" class="card__photo" /></li>`).join("")}
       </ul>`;
     const galleryControls = !hasGallery ? "" : `
-      <button type="button" data-gallery-step="-1" aria-label="Foto anterior de ${safeTitle}" class="${GALLERY_BUTTON} left-2">${CHEVRON_LEFT_ICON}</button>
-      <button type="button" data-gallery-step="1" aria-label="Foto siguiente de ${safeTitle}" class="${GALLERY_BUTTON} right-2">${CHEVRON_RIGHT_ICON}</button>
-      <span data-gallery-counter aria-hidden="true" class="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-ink px-2.5 py-0.5 text-xs font-bold text-paper">1 / ${images.length}</span>`;
+      <button type="button" data-gallery-step="-1" aria-label="Foto anterior de ${safeTitle}" class="card__arrow card__arrow--previous">${CHEVRON_LEFT_ICON}</button>
+      <button type="button" data-gallery-step="1" aria-label="Foto siguiente de ${safeTitle}" class="card__arrow card__arrow--next">${CHEVRON_RIGHT_ICON}</button>
+      <span data-gallery-counter aria-hidden="true" class="card__counter">1 / ${images.length}</span>`;
 
     const badgeHtml = badge
-      ? `<span class="rounded-full border-2 border-ink px-2.5 py-1 ${BADGE_TONE_CLASSES[badge.tone]}">${escapeHtml(badge.label)}</span>`
-      : "<span></span>";
+      ? `<span class="badge badge--${badge.tone}">${escapeHtml(badge.label)}</span>`
+      : "";
 
     const featuresHtml = features.length === 0 ? "" : `
-      <ul class="mt-3 grid gap-1.5 text-[15px] leading-snug">
-        ${features.map((feature) => `<li class="flex gap-2.5"><span aria-hidden="true" class="mt-1.5 size-2 shrink-0 rotate-45 bg-accent"></span>${escapeHtml(feature)}</li>`).join("")}
+      <ul class="card__features">
+        ${features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}
       </ul>`;
 
     const variantsHtml = variants.length < 2 ? "" : `
-      <div role="group" aria-label="Elige la versión de ${safeTitle}" class="mt-4">
-        <p class="text-sm font-bold text-navy/75">Elige la versión</p>
-        <div class="mt-1.5 flex flex-wrap gap-2">
-          ${variants.map((variant, index) => `<button type="button" data-variant="${index}" aria-pressed="${index === this.#variantIndex}" class="${VARIANT_BUTTON}">${escapeHtml(variant.label)}</button>`).join("")}
+      <div role="group" aria-label="Elige la versión de ${safeTitle}" class="card__variants">
+        <p class="card__variants-label">Elige la versión</p>
+        <div class="card__variants-list">
+          ${variants.map((variant, index) => `<button type="button" data-variant="${index}" aria-pressed="${index === this.#variantIndex}" class="variant">${escapeHtml(variant.label)}</button>`).join("")}
         </div>
       </div>`;
 
     this.innerHTML = `
-      <article class="flex h-full flex-col overflow-hidden rounded-2xl border-2 border-ink bg-paper shadow-[4px_4px_0_var(--color-ink)]">
-        <div class="relative grid aspect-square place-items-center border-b-2 border-ink bg-paper">
+      <article class="card">
+        <div class="card__media">
           ${media}
           ${galleryControls}
-          <div class="pointer-events-none absolute inset-x-3 top-3 flex items-start justify-between gap-2 text-xs font-extrabold uppercase tracking-wide">
+          <div class="card__tags">
             ${badgeHtml}
-            <span class="shrink-0 rounded-lg bg-ink px-2.5 py-1.5 whitespace-nowrap text-paper"><span class="sr-only">Código </span>${escapeHtml(code)}</span>
+            <span class="card__code"><span class="sr-only">Código </span>${escapeHtml(code)}</span>
           </div>
         </div>
-        <div class="flex flex-1 flex-col p-4">
-          <p class="text-xs font-bold uppercase tracking-wide text-navy/75">${meta}</p>
-          <h3 class="mt-2 line-clamp-3 font-body text-lg leading-snug font-extrabold">${safeTitle}</h3>
+        <div class="card__body">
+          <p class="card__meta">${meta}</p>
+          <h3 class="card__title">${safeTitle}</h3>
           ${featuresHtml}
           ${variantsHtml}
-          <div class="mt-auto flex gap-2 pt-5">
-            <a data-price-link href="${escapeHtml(this.selectedVariant.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border-2 border-ink bg-accent text-base font-extrabold text-ink transition-colors hover:bg-accent-2 ${FOCUS_RING}">
+          <div class="card__actions">
+            <a data-price-link href="${escapeHtml(this.selectedVariant.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
               <span data-price-label>${escapeHtml(this.priceLabel())}</span> ${EXTERNAL_ICON}
             </a>
-            <button type="button" data-share aria-label="Compartir ${safeTitle}" class="grid size-12 shrink-0 cursor-pointer place-items-center rounded-xl border-2 border-ink bg-paper text-ink transition-colors hover:bg-gray-1 ${FOCUS_RING}">${SHARE_ICON}</button>
+            <button type="button" data-share aria-label="Compartir ${safeTitle}" class="card__share">${SHARE_ICON}</button>
           </div>
-          <p class="mt-2.5 text-center text-[13px] leading-snug text-navy/80">Se abre en Mercado Libre · cuotas y envío según vendedor</p>
-          <p data-share-status role="status" class="text-center text-sm font-bold text-ink empty:hidden"></p>
+          <p class="card__note">Se abre en Mercado Libre · cuotas y envío según vendedor</p>
+          <p data-share-status role="status" class="card__status"></p>
         </div>
       </article>`;
 

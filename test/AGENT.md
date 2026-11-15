@@ -13,7 +13,7 @@ el publico son personas mayores de 30 años.
 
 #stack
 Javascript
-Tailwind
+CSS
 HTML
 
 ##
