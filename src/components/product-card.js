@@ -1,11 +1,14 @@
+import "./popover.js";
 import { categories } from "../data/categories.js";
 import { escapeHtml } from "../lib/categories.js";
 
 const SHARE_FEEDBACK_MS = 2500;
+const PRICE_POPOVER_TEXT = "Al presionar el botón serás redirigido para ver el producto en Mercado Libre.";
 
 const EXTERNAL_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
 const SHARE_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.7M8.2 13.2l7.6 3.7"/></svg>`;
 const CHEVRON_LEFT_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>`;
+const CHEVRON_DOWN_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg>`;
 const CHEVRON_RIGHT_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>`;
 const PLACEHOLDER_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="card__placeholder" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5.5-5 3.5 3 2.5-2 4.5 4"/></svg>`;
 
@@ -38,11 +41,20 @@ class ProductCard extends HTMLElement {
 
   handleClick = (event) => {
     if (event.target.closest("[data-share]")) this.share();
+    const detailsToggle = event.target.closest("[data-details-toggle]");
+    if (detailsToggle) this.toggleDetails(detailsToggle);
     const variantButton = event.target.closest("[data-variant]");
     if (variantButton) this.selectVariant(Number(variantButton.dataset.variant));
     const galleryButton = event.target.closest("[data-gallery-step]");
     if (galleryButton) this.stepGallery(Number(galleryButton.dataset.galleryStep));
   };
+
+  // A click keeps the features open (or closes them again); needed on phones
+  // and with the keyboard, where there is no pointer to hover with.
+  toggleDetails(toggle) {
+    const isOpen = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  }
 
   get selectedVariant() {
     return this.#product.variants[this.#variantIndex];
@@ -131,12 +143,24 @@ class ProductCard extends HTMLElement {
       ? `<span class="badge badge--${badge.tone}">${escapeHtml(badge.label)}</span>`
       : "";
 
+    // The features start collapsed; they open while the pointer is over them
+    // and stay open after a click on the toggle (see "Características" in CSS).
+    const featuresId = `features-${code}`;
     const featuresHtml = features.length === 0 ? "" : `
-      <ul class="card__features">
-        ${features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}
-      </ul>`;
+      <div class="card__details">
+        <button type="button" data-details-toggle aria-expanded="false" aria-controls="${escapeHtml(featuresId)}" class="card__details-toggle">
+          Ver características ${CHEVRON_DOWN_ICON}
+        </button>
+        <div class="card__details-panel">
+          <ul id="${escapeHtml(featuresId)}" class="card__features">
+            ${features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}
+          </ul>
+        </div>
+      </div>`;
 
-    const variantsHtml = variants.length < 2 ? "" : `
+    // Shown whenever the versions are named, even if there is only one, so the
+    // visitor knows which version the link opens.
+    const variantsHtml = !variants[0].label ? "" : `
       <div role="group" aria-label="Elige la versión de ${safeTitle}" class="card__variants">
         <p class="card__variants-label">Elige la versión</p>
         <div class="card__variants-list">
@@ -160,9 +184,11 @@ class ProductCard extends HTMLElement {
           ${featuresHtml}
           ${variantsHtml}
           <div class="card__actions">
-            <a data-price-link href="${escapeHtml(this.selectedVariant.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
-              <span data-price-label>${escapeHtml(this.priceLabel())}</span> ${EXTERNAL_ICON}
-            </a>
+            <info-popover text="${PRICE_POPOVER_TEXT}">
+              <a data-price-link href="${escapeHtml(this.selectedVariant.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
+                <span data-price-label>${escapeHtml(this.priceLabel())}</span> ${EXTERNAL_ICON}
+              </a>
+            </info-popover>
             <button type="button" data-share aria-label="Compartir ${safeTitle}" class="card__share">${SHARE_ICON}</button>
           </div>
           <p class="card__note">Se abre en Mercado Libre · cuotas y envío según vendedor</p>

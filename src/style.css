@@ -59,6 +59,13 @@
 html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+  /* Sin barra de scroll visible: la página se sigue desplazando con la rueda,
+     el teclado o el dedo. */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -158,6 +165,49 @@ textarea {
 .icon--small {
   width: 1rem;
   height: 1rem;
+}
+
+/* ---------- Popover (componente <info-popover>) ---------- */
+info-popover {
+  position: relative;
+  display: inline-flex;
+}
+
+.popover__bubble {
+  position: absolute;
+  bottom: calc(100% + 0.625rem);
+  left: 0;
+  z-index: 20;
+  width: max-content;
+  max-width: 13.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: var(--ink);
+  color: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.375;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+/* Flecha que apunta al botón */
+.popover__bubble::after {
+  position: absolute;
+  top: 100%;
+  left: 1.25rem;
+  border: 0.375rem solid transparent;
+  border-top-color: var(--ink);
+  content: "";
+}
+
+info-popover:not([dismissed]):hover .popover__bubble,
+info-popover:not([dismissed]):focus-within .popover__bubble {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ---------- Logo ---------- */
@@ -680,12 +730,71 @@ product-card {
   line-clamp: 3;
 }
 
+/* Características: ocultas al inicio. Se despliegan mientras el mouse está
+   encima y quedan abiertas tras un clic en "Ver características". */
+.card__details {
+  margin-top: 0.75rem;
+}
+
+.card__details-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-inline: 0.875rem;
+  border: 2px solid var(--ink);
+  border-radius: 0.75rem;
+  background-color: var(--gray-1);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.card__details-toggle .icon {
+  transition: transform 0.2s;
+}
+
+/* El panel pasa de alto 0 a su alto natural. */
+.card__details-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.2s, visibility 0.2s;
+}
+
+.card__details-toggle[aria-expanded="true"] + .card__details-panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.card__details-toggle[aria-expanded="true"] .icon {
+  transform: rotate(180deg);
+}
+
+/* Solo donde existe un puntero que puede pasar por encima (no en táctiles). */
+@media (hover: hover) {
+  .card__details:hover .card__details-panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+  }
+
+  .card__details:hover .card__details-toggle .icon {
+    transform: rotate(180deg);
+  }
+}
+
 .card__features {
   display: grid;
+  min-height: 0;
   gap: 0.375rem;
-  margin-top: 0.75rem;
+  overflow: hidden;
   font-size: 0.9375rem;
   line-height: 1.375;
+}
+
+.card__features li:first-child {
+  margin-top: 0.75rem;
 }
 
 .card__features li {
@@ -750,6 +859,11 @@ product-card {
   padding-top: 1.25rem;
 }
 
+/* El popover envuelve al botón "Ver precio" y ocupa el ancho disponible. */
+.card__actions info-popover {
+  flex: 1;
+}
+
 .card__price {
   display: flex;
   height: 3rem;
@@ -805,6 +919,11 @@ product-card {
 
 /* ---------- Movimiento reducido ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .card__details-panel,
+  .card__details-toggle .icon {
+    transition: none;
+  }
+
   .card__gallery {
     scroll-behavior: auto;
   }
