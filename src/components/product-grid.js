@@ -31,7 +31,7 @@ class ProductGrid extends HTMLElement {
           <p class="text-sm font-bold text-navy/75">${productCountLabel(visibleProducts.length)}</p>
         </div>
         ${visibleProducts.length === 0
-          ? `<p class="mt-6 rounded-2xl border-2 border-ink bg-paper p-6 text-lg">Todavía no hay productos en esta categoría. <a href="/" class="font-bold underline">Ver todos los productos</a></p>`
+          ? `<p class="mt-6 rounded-2xl border-2 border-ink bg-paper p-6 text-lg">Todavía no hay productos en esta categoría. <a href="./" class="font-bold underline">Ver todos los productos</a></p>`
           : `<ul data-cards class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></ul>`}
       </section>`;
 

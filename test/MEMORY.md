@@ -24,6 +24,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 - Fuentes instaladas con pnpm (@fontsource), no desde Google Fonts.
 
 ## Aprendizajes y errores a evitar
+- El sitio no funciona servido "tal cual" (Live Server o GitHub Pages desde la rama): hay que publicar `dist/`. `.github/workflows/deploy.yml` lo compila y publica; Pages debe tener como origen "GitHub Actions".
+- Todas las rutas internas son relativas (`./`, `img/...`) y `base: "./"` en Vite, para que funcione en `rodolfotech.github.io/datosonline/` y también con dominio propio.
 - `position: sticky` debe ir en el elemento `<site-navbar>`, no en el `<header>` interno.
 - `opencode.json` contiene la clave de Context7 y está en `.gitignore`; no subirlo.
 

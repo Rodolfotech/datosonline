@@ -7,7 +7,8 @@
 //         link: [{ label: "512 GB", url }, ...]. The first one is preselected.
 // badge: { label, tone } where tone is "top", "hot", "new" or "value".
 // images: product photos, served from public/ (public/img/do-001/a.webp is
-//         "/img/do-001/a.webp"). The first one is the cover; with several the
+//         "img/do-001/a.webp", without a leading slash so it also works
+//         when the site is published in a subfolder). The first one is the cover; with several the
 //         card shows a gallery, and without any it shows a placeholder.
 export const products = [
   {
@@ -18,11 +19,11 @@ export const products = [
     features: ["Chip A19 Pro con refrigeración", "Triple cámara 48 MP", 'Pantalla OLED 6,9"'],
     badge: { label: "Reel nuevo", tone: "hot" },
     images: [
-      "/img/do-001/lineup.webp",
-      "/img/do-001/duo.webp",
-      "/img/do-001/blue.webp",
-      "/img/do-001/cam.webp",
-      "/img/do-001/orange.webp",
+      "img/do-001/lineup.webp",
+      "img/do-001/duo.webp",
+      "img/do-001/blue.webp",
+      "img/do-001/cam.webp",
+      "img/do-001/orange.webp",
     ],
     variants: [
       { label: "512 GB", url: "https://meli.la/1b1hRfv" },
@@ -43,11 +44,11 @@ export const products = [
       "Funciones Galaxy AI",
     ],
     images: [
-      "/img/do-004/duo.webp",
-      "/img/do-004/front.webp",
-      "/img/do-004/back.webp",
-      "/img/do-004/side.webp",
-      "/img/do-004/serie.webp",
+      "img/do-004/duo.webp",
+      "img/do-004/front.webp",
+      "img/do-004/back.webp",
+      "img/do-004/side.webp",
+      "img/do-004/serie.webp",
     ],
     url: "https://meli.la/2m39efj",
   },
@@ -65,9 +66,9 @@ export const products = [
     ],
     badge: { label: "Recomendado", tone: "hot" },
     images: [
-      "/img/do-007/capas.webp",
-      "/img/do-007/dormitorio.webp",
-      "/img/do-007/funda-textura.webp",
+      "img/do-007/capas.webp",
+      "img/do-007/dormitorio.webp",
+      "img/do-007/funda-textura.webp",
     ],
     url: "https://meli.la/2VxPqC7",
   },

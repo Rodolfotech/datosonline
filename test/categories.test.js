@@ -15,8 +15,8 @@ test("getActiveCategorySlug falls back to all products for unknown or missing sl
 });
 
 test("categoryUrl builds the link for a category and for all products", () => {
-  assert.equal(categoryUrl("tecnologia"), "/?categoria=tecnologia");
-  assert.equal(categoryUrl(""), "/");
+  assert.equal(categoryUrl("tecnologia"), "./?categoria=tecnologia");
+  assert.equal(categoryUrl(""), "./");
 });
 
 test("splitCategories moves the extra categories to overflow", () => {
