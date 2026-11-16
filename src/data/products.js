@@ -13,7 +13,7 @@ export const products = [
       "esistencia IP64 y conectividad NFC"
     ],
     "badge": {
-      "label": "TIENDA OFICIAL DEXiaomi",
+      "label": "TIENDA OFICIAL Xiaomi",
       "tone": "hot"
     },
     "images": [
