@@ -511,3 +511,9 @@ select.field__input {
   max-width: 20rem;
   margin-top: 1rem;
 }
+
+/* Al arrastrar fotos sobre la sección se resalta para indicar dónde van. */
+.group.is-dragging {
+  border-color: var(--accent);
+  background-color: #fff4ec;
+}

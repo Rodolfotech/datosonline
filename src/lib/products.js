@@ -5,7 +5,8 @@
 //   url:       affiliate link to Mercado Libre (must start with https://).
 //   variants:  used instead of `url` when each version has its own link:
 //              [{ label: "512 GB", url }, ...]. The first one is preselected.
-//   badge:     { label, tone } where tone is "top", "hot", "new" or "value".
+//   badge:     { label, tone } where tone is "top", "hot", "new", "value",
+//              "gray", "black" or "silver".
 //   images:    photos from the img/ folder, without a leading slash
 //              ("img/do-001/a.webp"). The first one is the cover; with several
 //              the card shows a gallery, and without any, a placeholder.
@@ -13,7 +14,7 @@
 //   ribbon:    "horizontal" or "diagonal", position of the "No disponible" tape.
 
 export const MAX_FEATURES = 6;
-const BADGE_TONES = ["top", "hot", "new", "value"];
+const BADGE_TONES = ["top", "hot", "new", "value", "gray", "black", "silver"];
 const DEFAULT_BADGE_TONE = "hot";
 
 // Slug of the category that gathers the products marked as not available.

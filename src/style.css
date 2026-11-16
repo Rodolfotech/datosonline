@@ -744,6 +744,19 @@ product-card {
   color: var(--paper);
 }
 
+.badge--gray {
+  background-color: var(--gray-2);
+}
+
+.badge--black {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+.badge--silver {
+  background-color: #c4cad4;
+}
+
 .card__body {
   display: flex;
   flex: 1;

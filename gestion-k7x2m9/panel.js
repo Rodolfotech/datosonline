@@ -38,6 +38,8 @@ const PUBLISHED_NOTICE = "El cambio se verá en datosonline.cl en unos minutos."
 const SITE_ROOT = "../";
 const PHOTO_PLACEHOLDER = `<svg aria-hidden="true" viewBox="0 0 24 24" class="product-row__placeholder" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5.5-5 3.5 3 2.5-2 4.5 4"/></svg>`;
 const root = document.querySelector("#panel");
+window.addEventListener("dragover", (event) => event.preventDefault());
+window.addEventListener("drop", (event) => event.preventDefault());
 
 // What the panel knows while the session is open.
 const state = { client: null, catalog: null, form: null };
@@ -269,6 +271,9 @@ const BADGE_TONES = [
   ["top", "Amarillo"],
   ["new", "Verde"],
   ["value", "Violeta"],
+  ["gray", "Gris"],
+  ["black", "Negro"],
+  ["silver", "Plateado"],
 ];
 const RIBBON_LABELS = { horizontal: "A media foto", diagonal: "En diagonal" };
 
@@ -449,6 +454,7 @@ function showProductForm({ errors = [], notice = "", error = "" } = {}) {
     image.addEventListener("error", () => image.replaceWith(Object.assign(document.createElement("span"), { className: "photo__missing", textContent: "Sin vista previa" })));
   }
   form.addEventListener("submit", handleFormSubmit);
+  bindPhotoDropZone(form.querySelector("[data-photos]"));
   root.querySelector("[data-signout]").addEventListener("click", signOut);
 }
 
@@ -558,7 +564,7 @@ function photoFields(values, errors) {
   return `
     <fieldset class="group" data-photos>
       <legend class="group__title">Fotos <span class="field__optional">(opcional, ${count} de ${MAX_IMAGES})</span></legend>
-      <p class="field__help">La primera es la portada. Se reducen solas antes de guardarse.</p>
+      <p class="field__help">La primera es la portada. Se reducen solas antes de guardarse. Puedes arrastrar las fotos a esta sección o usar el botón.</p>
       ${count > 0 ? `<ul class="photos">${items}</ul>` : ""}
       <p role="alert" class="panel__error" data-photo-error>${escapeHtml(state.form.photoMessage)}</p>
       ${errorMessage(errors, "images", "images")}
@@ -621,6 +627,24 @@ function movePhoto(index, step) {
   const target = index + step;
   if (target < 0 || target >= images.length) return;
   [images[index], images[target]] = [images[target], images[index]];
+}
+
+// Photos can be dropped on the photo section. The zone highlights while files
+// are dragged over it; a drop anywhere else on the page must not make the
+// browser open the image and lose the form.
+function bindPhotoDropZone(zone) {
+  zone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    zone.classList.add("is-dragging");
+  });
+  zone.addEventListener("dragleave", (event) => {
+    if (!zone.contains(event.relatedTarget)) zone.classList.remove("is-dragging");
+  });
+  zone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    zone.classList.remove("is-dragging");
+    addPhotos([...event.dataTransfer.files]);
+  });
 }
 
 // Frees the previews of the photos that were not published.
