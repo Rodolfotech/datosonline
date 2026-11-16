@@ -2,6 +2,36 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "DO-011",
+    "title": "Xiaomi Redmi 17",
+    "category": "smartphones",
+    "features": [
+      "Batería gigante de 7.500 mAh con carga rápida de 45W",
+      "Pantalla amplia de 6,9\" a 120 Hz con Gorilla Glass 7i",
+      "256 GB de almacenamiento interno expandible",
+      "Cámara principal de 50 MP y frontal de 8 MP",
+      "esistencia IP64 y conectividad NFC"
+    ],
+    "badge": {
+      "label": "TIENDA OFICIAL DEXiaomi",
+      "tone": "hot"
+    },
+    "images": [
+      "img/do-011/1-104s2d.webp",
+      "img/do-011/2-142x1h.webp",
+      "img/do-011/3-20052c.webp",
+      "img/do-011/4-56066g.webp",
+      "img/do-011/5-2k2k68.webp",
+      "img/do-011/6-002a07.webp"
+    ],
+    "variants": [
+      {
+        "label": "256 GB",
+        "url": "https://meli.la/1AgyMd9"
+      }
+    ]
+  },
+  {
     "code": "DO-010",
     "title": "iPhone 18 Pro",
     "category": "smartphones",
