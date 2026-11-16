@@ -5,6 +5,13 @@ export const products = [
     "code": "DO-010",
     "title": "iPhone 18 Pro",
     "category": "smartphones",
+    "features": [
+      "Chip A20 Pro con 12 GB de RAM",
+      "Sistema triple de cámaras de 48 MP con apertura variable",
+      "Cámara frontal Center Stage de 18 MP con Captura Dual",
+      "Mayor autonomía y carga veloz",
+      "Pantalla Super Retina XDR de 6,3\" y cuerpo resistente"
+    ],
     "badge": {
       "label": "APPLE TIENDA OFICIAL",
       "tone": "hot"
