@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Keep the panel out of search engines and never leak its address. -->
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <!-- Only code from this site may run, and the only server the page may
+         talk to is GitHub: the token cannot be sent anywhere else. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' blob: data:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'"
+    />
+    <title>Panel · Datos Online</title>
+    <link rel="stylesheet" href="../src/style.css" />
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body class="panel-page">
+    <main id="panel" class="panel"></main>
+    <noscript>El panel necesita JavaScript activado.</noscript>
+    <script type="module" src="panel.js"></script>
+  </body>
+</html>

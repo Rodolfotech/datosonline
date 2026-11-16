@@ -1,4 +1,14 @@
 // Pure category logic: no DOM access, so it can be tested with node --test.
+import { UNAVAILABLE_SLUG, getVisibleProducts } from "./products.js";
+
+const UNAVAILABLE_CATEGORY = { slug: UNAVAILABLE_SLUG, name: "No disponible" };
+
+// Categories the visitor can browse: the stored ones plus "No disponible",
+// which exists only while at least one product is unavailable.
+export function getSiteCategories(categories, products) {
+  const hasUnavailableProducts = getVisibleProducts(products, UNAVAILABLE_SLUG).length > 0;
+  return hasUnavailableProducts ? [...categories, UNAVAILABLE_CATEGORY] : categories;
+}
 
 const CATEGORY_PARAM = "categoria";
 

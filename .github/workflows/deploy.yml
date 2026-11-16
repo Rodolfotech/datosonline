@@ -30,6 +30,7 @@ jobs:
           mkdir -p _site/src
           cp -r index.html img _site/
           cp -r src/style.css src/main.js src/components src/data src/lib src/fonts _site/src/
+          cp -r gestion-k7x2m9 _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
