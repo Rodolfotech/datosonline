@@ -1,7 +1,7 @@
 import "./product-card.js";
 import { categories } from "../data/categories.js";
 import { products } from "../data/products.js";
-import { escapeHtml } from "../lib/categories.js";
+import { escapeHtml, getSiteCategories } from "../lib/categories.js";
 import { getVisibleProducts, productCountLabel } from "../lib/products.js";
 
 // <product-grid category="smartphones"></product-grid>
@@ -19,7 +19,7 @@ class ProductGrid extends HTMLElement {
 
   render() {
     const categorySlug = this.getAttribute("category") ?? "";
-    const category = categories.find((item) => item.slug === categorySlug);
+    const category = getSiteCategories(categories, products).find((item) => item.slug === categorySlug);
     const visibleProducts = getVisibleProducts(products, category ? categorySlug : "");
     const heading = category ? category.name : "Todos los productos";
 

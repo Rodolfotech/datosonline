@@ -1,6 +1,7 @@
 import { categories } from "../data/categories.js";
+import { products } from "../data/products.js";
 import { site } from "../data/site.js";
-import { categoryUrl, escapeHtml } from "../lib/categories.js";
+import { categoryUrl, escapeHtml, getSiteCategories } from "../lib/categories.js";
 import { logoHtml } from "./logo.js";
 
 // The footer lists only the first categories so it stays short as they grow.
@@ -11,7 +12,9 @@ const INSTAGRAM_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon"
 // <site-footer></site-footer>
 class SiteFooter extends HTMLElement {
   connectedCallback() {
-    const footerCategories = [{ slug: "", name: "Todo" }, ...categories.slice(0, MAX_FOOTER_CATEGORIES)];
+    // "No disponible" goes last and is not counted in the limit.
+    const listedCategories = getSiteCategories(categories.slice(0, MAX_FOOTER_CATEGORIES), products);
+    const footerCategories = [{ slug: "", name: "Todo" }, ...listedCategories];
     const year = new Date().getFullYear();
 
     this.innerHTML = `

@@ -1,8 +1,26 @@
 // Pure product logic: no DOM access, so it can be tested with node --test.
+//
+// Product fields (src/data/products.js). Only `code`, `title`, `category` and
+// a link are required; the rest is optional so older entries keep working.
+//   url:       affiliate link to Mercado Libre (must start with https://).
+//   variants:  used instead of `url` when each version has its own link:
+//              [{ label: "512 GB", url }, ...]. The first one is preselected.
+//   badge:     { label, tone } where tone is "top", "hot", "new" or "value".
+//   images:    photos from the img/ folder, without a leading slash
+//              ("img/do-001/a.webp"). The first one is the cover; with several
+//              the card shows a gallery, and without any, a placeholder.
+//   available: false marks the product as not available (default: true).
+//   ribbon:    "horizontal" or "diagonal", position of the "No disponible" tape.
 
 export const MAX_FEATURES = 6;
 const BADGE_TONES = ["top", "hot", "new", "value"];
 const DEFAULT_BADGE_TONE = "hot";
+
+// Slug of the category that gathers the products marked as not available.
+// It is not stored in the data: the products keep their original category.
+export const UNAVAILABLE_SLUG = "no-disponible";
+const RIBBON_POSITIONS = ["horizontal", "diagonal"];
+const DEFAULT_RIBBON_POSITION = "diagonal";
 
 function isSafeUrl(url) {
   return typeof url === "string" && url.startsWith("https://");
@@ -45,15 +63,22 @@ export function normalizeProduct(product) {
     badge: badgeLabel ? { label: badgeLabel, tone: badgeTone } : null,
     images: getProductImages(product),
     variants: getProductVariants(product),
+    // Older entries have no `available` field: they are available.
+    available: product.available !== false,
+    ribbon: RIBBON_POSITIONS.includes(product.ribbon) ? product.ribbon : DEFAULT_RIBBON_POSITION,
   };
 }
 
 // Returns the products ready to render, optionally filtered by category.
+// Unavailable products are shown only under UNAVAILABLE_SLUG: not in "all
+// products" and not in their original category.
 export function getVisibleProducts(products, categorySlug = "") {
-  return products
-    .filter(isValidProduct)
-    .filter((product) => !categorySlug || product.category === categorySlug)
-    .map(normalizeProduct);
+  const visibleProducts = products.filter(isValidProduct).map(normalizeProduct);
+
+  if (categorySlug === UNAVAILABLE_SLUG) return visibleProducts.filter((product) => !product.available);
+  return visibleProducts
+    .filter((product) => product.available)
+    .filter((product) => !categorySlug || product.category === categorySlug);
 }
 
 export function productCountLabel(count) {

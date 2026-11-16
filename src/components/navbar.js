@@ -1,5 +1,6 @@
 import { categories } from "../data/categories.js";
-import { categoryUrl, escapeHtml, splitCategories } from "../lib/categories.js";
+import { products } from "../data/products.js";
+import { categoryUrl, escapeHtml, getSiteCategories, splitCategories } from "../lib/categories.js";
 import { logoHtml } from "./logo.js";
 
 // Categories shown directly in the desktop bar; the rest go under "Más".
@@ -66,8 +67,9 @@ class SiteNavbar extends HTMLElement {
 
   render() {
     const activeSlug = this.getAttribute("active-category") ?? "";
-    const allCategories = [{ slug: "", name: "Todo" }, ...categories];
-    const { visible, overflow } = splitCategories(categories, MAX_VISIBLE_CATEGORIES, activeSlug);
+    const siteCategories = getSiteCategories(categories, products);
+    const allCategories = [{ slug: "", name: "Todo" }, ...siteCategories];
+    const { visible, overflow } = splitCategories(siteCategories, MAX_VISIBLE_CATEGORIES, activeSlug);
     const desktopCategories = [allCategories[0], ...visible];
 
     const moreMenu = overflow.length === 0 ? "" : `

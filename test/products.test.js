@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { getVisibleProducts, isValidProduct, normalizeProduct, productCountLabel } from "../src/lib/products.js";
+import { UNAVAILABLE_SLUG, getVisibleProducts, isValidProduct, normalizeProduct, productCountLabel } from "../src/lib/products.js";
 
 const base = { code: "DO-001", title: "Phone", category: "tecnologia", url: "https://example.com/p" };
 
@@ -65,4 +65,37 @@ test("productCountLabel handles singular and plural", () => {
   assert.equal(productCountLabel(1), "1 producto");
   assert.equal(productCountLabel(0), "0 productos");
   assert.equal(productCountLabel(10), "10 productos");
+});
+
+test("normalizeProduct treats products without `available` as available", () => {
+  assert.equal(normalizeProduct(base).available, true);
+  assert.equal(normalizeProduct({ ...base, available: true }).available, true);
+  assert.equal(normalizeProduct({ ...base, available: false }).available, false);
+});
+
+test("normalizeProduct accepts the two ribbon positions and falls back to diagonal", () => {
+  assert.equal(normalizeProduct({ ...base, available: false, ribbon: "horizontal" }).ribbon, "horizontal");
+  assert.equal(normalizeProduct({ ...base, available: false, ribbon: "diagonal" }).ribbon, "diagonal");
+  assert.equal(normalizeProduct({ ...base, available: false, ribbon: "zzz" }).ribbon, "diagonal");
+  assert.equal(normalizeProduct({ ...base, available: false }).ribbon, "diagonal");
+});
+
+test("unavailable products are shown only in the unavailable category", () => {
+  const list = [
+    base,
+    { ...base, code: "DO-002", available: false },
+    { ...base, code: "DO-003", category: "colchones", available: false, ribbon: "horizontal" },
+  ];
+  assert.equal(UNAVAILABLE_SLUG, "no-disponible");
+  assert.deepEqual(getVisibleProducts(list).map((product) => product.code), ["DO-001"]);
+  assert.deepEqual(getVisibleProducts(list, "tecnologia").map((product) => product.code), ["DO-001"]);
+  assert.deepEqual(getVisibleProducts(list, "colchones"), []);
+  assert.deepEqual(getVisibleProducts(list, UNAVAILABLE_SLUG).map((product) => product.code), ["DO-002", "DO-003"]);
+});
+
+test("an unavailable product keeps its original category and data", () => {
+  const [product] = getVisibleProducts([{ ...base, available: false, features: ["a"] }], UNAVAILABLE_SLUG);
+  assert.equal(product.category, "tecnologia");
+  assert.deepEqual(product.features, ["a"]);
+  assert.deepEqual(product.variants, [{ label: "", url: "https://example.com/p" }]);
 });

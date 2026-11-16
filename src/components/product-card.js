@@ -67,6 +67,7 @@ class ProductCard extends HTMLElement {
 
   // Points "Ver precio" to the chosen version without redrawing the card.
   selectVariant(index) {
+    if (!this.#product.available) return;
     this.#variantIndex = index;
     for (const button of this.querySelectorAll("[data-variant]")) {
       button.setAttribute("aria-pressed", String(Number(button.dataset.variant) === index));
@@ -99,6 +100,7 @@ class ProductCard extends HTMLElement {
   };
 
   async share() {
+    if (!this.#product.available) return;
     const { url, label } = this.selectedVariant;
     const title = [this.#product.title, label].filter(Boolean).join(" ");
     try {
@@ -124,7 +126,7 @@ class ProductCard extends HTMLElement {
   }
 
   render() {
-    const { code, title, category, subcategory, features, badge, images, variants } = this.#product;
+    const { code, title, category, subcategory, features, badge, images, variants, available, ribbon } = this.#product;
     const safeTitle = escapeHtml(title);
     const meta = [categoryName(category), subcategory].filter(Boolean).map(escapeHtml).join(' <span aria-hidden="true">·</span> ');
 
@@ -138,6 +140,13 @@ class ProductCard extends HTMLElement {
       <button type="button" data-gallery-step="-1" aria-label="Foto anterior de ${safeTitle}" class="card__arrow card__arrow--previous">${CHEVRON_LEFT_ICON}</button>
       <button type="button" data-gallery-step="1" aria-label="Foto siguiente de ${safeTitle}" class="card__arrow card__arrow--next">${CHEVRON_RIGHT_ICON}</button>
       <span data-gallery-counter aria-hidden="true" class="card__counter">1 / ${images.length}</span>`;
+
+    // Police-style tape over the photos of a product that is not available.
+    // It sits outside the gallery, so it stays in place on every photo.
+    const ribbonHtml = available ? "" : `
+      <div class="card__ribbon-area">
+        <p class="ribbon ribbon--${ribbon}"><span class="ribbon__text">No disponible</span></p>
+      </div>`;
 
     const badgeHtml = badge
       ? `<span class="badge badge--${badge.tone}">${escapeHtml(badge.label)}</span>`
@@ -164,19 +173,27 @@ class ProductCard extends HTMLElement {
       <div role="group" aria-label="Elige la versión de ${safeTitle}" class="card__variants">
         <p class="card__variants-label">Elige la versión</p>
         <div class="card__variants-list">
-          ${variants.map((variant, index) => `<button type="button" data-variant="${index}" aria-pressed="${index === this.#variantIndex}" class="variant">${escapeHtml(variant.label)}</button>`).join("")}
+          ${variants.map((variant, index) => `<button type="button" data-variant="${index}" aria-pressed="${available && index === this.#variantIndex}"${available ? "" : " disabled"} class="variant">${escapeHtml(variant.label)}</button>`).join("")}
         </div>
       </div>`;
+
+    // An unavailable product keeps its place on the site but none of its
+    // controls opens Mercado Libre: its links may no longer work.
+    const priceHtml = available ? `
+            <info-popover text="${PRICE_POPOVER_TEXT}">
+              <a data-price-link href="${escapeHtml(this.selectedVariant.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
+                <span data-price-label>${escapeHtml(this.priceLabel())}</span> ${EXTERNAL_ICON}
+              </a>
+            </info-popover>` : `
+            <button type="button" disabled aria-label="${safeTitle} no está disponible" class="card__price">No disponible</button>`;
 
     this.innerHTML = `
       <article class="card">
         <div class="card__media">
           ${media}
+          ${ribbonHtml}
           ${galleryControls}
-          <div class="card__tags">
-            ${badgeHtml}
-            <span class="card__code"><span class="sr-only">Código </span>${escapeHtml(code)}</span>
-          </div>
+          <div class="card__tags">${badgeHtml}</div>
         </div>
         <div class="card__body">
           <p class="card__meta">${meta}</p>
@@ -184,14 +201,10 @@ class ProductCard extends HTMLElement {
           ${featuresHtml}
           ${variantsHtml}
           <div class="card__actions">
-            <info-popover text="${PRICE_POPOVER_TEXT}">
-              <a data-price-link href="${escapeHtml(this.selectedVariant.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
-                <span data-price-label>${escapeHtml(this.priceLabel())}</span> ${EXTERNAL_ICON}
-              </a>
-            </info-popover>
-            <button type="button" data-share aria-label="Compartir ${safeTitle}" class="card__share">${SHARE_ICON}</button>
+            ${priceHtml}
+            <button type="button" data-share aria-label="Compartir ${safeTitle}"${available ? "" : " disabled"} class="card__share">${SHARE_ICON}</button>
           </div>
-          <p class="card__note">Se abre en Mercado Libre · cuotas y envío según vendedor</p>
+          <p class="card__note">${available ? "Se abre en Mercado Libre · cuotas y envío según vendedor" : "Este producto no está disponible por ahora"}</p>
           <p data-share-status role="status" class="card__status"></p>
         </div>
       </article>`;
