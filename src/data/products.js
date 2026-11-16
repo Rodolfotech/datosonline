@@ -2,6 +2,29 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "DO-008",
+    "title": "Samsung Galaxy A57 5G",
+    "category": "smartphones",
+    "features": [
+      "Pantalla: 6,7\" Super AMOLED Full HD+ (1080 × 2400 px)",
+      "Diseño ultradelgado y liviano: Solo 6,9 mm de grosor y 179 g de peso.",
+      "Batería: 5.000 mAh (5 Ah) con carga rápida (sin carga inalámbrica).",
+      "Conectividad: 5G, eSIM + Nano-SIM (Dual SIM),",
+      "riple cámara trasera de 50 Mpx (principal f/1.8) + 12 Mpx (gran angular f/2.2)"
+    ],
+    "images": [
+      "img/do-008/1-5r6y40.webp",
+      "img/do-008/2-240539.webp",
+      "img/do-008/3-6o200f.webp"
+    ],
+    "variants": [
+      {
+        "label": "128 GB",
+        "url": "https://meli.la/1gdAMeA"
+      }
+    ]
+  },
+  {
     "code": "DO-001",
     "title": "iPhone 17 Pro Max",
     "category": "smartphones",
