@@ -28,6 +28,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 - Fuentes locales en `src/fonts/` (Archivo Black e Inter variable, subconjunto latino), cargadas con `@font-face`; no se usa Google Fonts.
 - Se quitaron Tailwind y Vite (pedido del dueño, 2026-11-15) porque GitHub Pages y Live Server sirven los archivos tal cual y no encontraban los estilos.
 
+- Panel, fotos: se agregan con el botón o arrastrándolas sobre la sección de fotos (pedido del dueño, 2026-11-16). Soltar fuera de esa zona no abre la imagen, para no perder el formulario.
+
 ## Aprendizajes y errores a evitar
 - `src/data/products.js` y `categories.js` están en formato generado (JSON estricto dentro de `export const … = [ … ];`, con cabecera de comentarios). No editarlos a mano con otro formato: se escriben con `serializeDataFile` y se leen con `parseDataFile` (`src/lib/data-file.js`); un test falla si se salen del formato. La descripción de los campos está al inicio de `src/lib/products.js`.
 - No reintroducir pasos de compilación: el sitio debe funcionar servido "tal cual" desde la raíz del repositorio. `.github/workflows/deploy.yml` solo corre los tests y copia los archivos.

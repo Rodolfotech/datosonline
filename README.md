@@ -39,3 +39,5 @@ Si pegaste el token en un lugar equivocado (un chat, un correo, un archivo del r
 - El token nunca se guarda en este repositorio ni en ningún archivo del sitio.
 - El panel lo mantiene solo mientras la pestaña está abierta; al cerrarla hay que volver a pegarlo.
 - La dirección del panel no se escribe en este archivo: el repositorio es público.
+
+datosonline.cl/gestion-k7x2m9/

@@ -49,6 +49,12 @@ test("normalizeProduct keeps at most six features", () => {
   assert.deepEqual(product.features, ["a", "b", "c", "d", "e", "f"]);
 });
 
+test("normalizeProduct accepts gray, black and silver badges", () => {
+  for (const tone of ["gray", "black", "silver"]) {
+    assert.deepEqual(normalizeProduct({ ...base, badge: { label: "X", tone } }).badge, { label: "X", tone });
+  }
+});
+
 test("normalizeProduct falls back to the default tone for unknown badge tones", () => {
   assert.deepEqual(normalizeProduct({ ...base, badge: { label: "Oferta", tone: "zzz" } }).badge, { label: "Oferta", tone: "hot" });
   assert.equal(normalizeProduct({ ...base, badge: { label: "  ", tone: "top" } }).badge, null);

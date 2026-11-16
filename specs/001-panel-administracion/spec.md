@@ -67,7 +67,7 @@ El sitio no tiene servidor: los cambios se guardan en el repositorio de GitHub d
 
 ### Fotos
 
-- RF-18. EL SISTEMA debe permitir elegir hasta 10 fotos por producto desde el dispositivo, quitarlas y definir su orden; la primera es la portada.
+- RF-18. EL SISTEMA debe permitir elegir hasta 10 fotos por producto desde el dispositivo, quitarlas y definir su orden; la primera es la portada. Las fotos pueden elegirse con el botón o arrastrarse sobre la sección de fotos (pedido del dueño, 2026-11-16).
 - RF-39. SI el dueño intenta superar las 10 fotos, ENTONCES EL SISTEMA debe impedirlo y avisar que se alcanzó el máximo, conservando las ya elegidas.
 - RF-19. CUANDO el dueño elige una foto, EL SISTEMA debe reducirla y optimizarla antes de guardarla, de modo que su lado mayor no supere los 800 píxeles.
 - RF-20. SI un archivo elegido no es una imagen, ENTONCES EL SISTEMA debe rechazarlo y avisar cuál fue, sin descartar las demás fotos.
