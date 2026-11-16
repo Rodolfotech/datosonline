@@ -177,9 +177,10 @@ export const products = [
       "riple cámara trasera de 50 Mpx (principal f/1.8) + 12 Mpx (gran angular f/2.2)"
     ],
     "images": [
+      "img/do-008/3-6o200f.webp",
+      "img/do-008/2-6y6846.webp",
       "img/do-008/1-5r6y40.webp",
-      "img/do-008/2-240539.webp",
-      "img/do-008/3-6o200f.webp"
+      "img/do-008/2-240539.webp"
     ],
     "variants": [
       {
