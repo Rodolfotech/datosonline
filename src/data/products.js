@@ -2,6 +2,34 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "DO-013",
+    "title": "Moto G86 power",
+    "category": "smartphones",
+    "features": [
+      "Batería de 6.720 mAh con carga rápida de 30W",
+      "Resistencia IP68/IP69 y grado militar MIL-STD-810H",
+      "Pantalla pOLED de 6,67\" a 120 Hz",
+      "Cámara principal de 50 MP con sensor Sony LYTIA 600",
+      "Procesador MediaTek Dimensity 7300 con 8 GB de RAM y 256 GB internos"
+    ],
+    "badge": {
+      "label": "TIENDA OFICIAL MOTOROLA",
+      "tone": "hot"
+    },
+    "images": [
+      "img/do-013/1-5h725i.webp",
+      "img/do-013/2-2n4s0i.webp",
+      "img/do-013/3-2x6536.webp",
+      "img/do-013/4-506y2n.webp"
+    ],
+    "variants": [
+      {
+        "label": "256 GB",
+        "url": "https://meli.la/1PsiHVP"
+      }
+    ]
+  },
+  {
     "code": "DO-012",
     "title": "Xiaomi 17t",
     "category": "smartphones",
