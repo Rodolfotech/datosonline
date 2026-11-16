@@ -2,6 +2,34 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "DO-014",
+    "title": "Moto G06",
+    "category": "smartphones",
+    "features": [
+      "Pantalla IPS de 6,9\" con tasa de refresco de 120 Hz",
+      "Almacenamiento interno de 256 GB expandible",
+      "Batería de 5.200 mAh",
+      "Altavoces estéreo con Dolby Atmos y conector de 3,5 mm",
+      "Protección IP64 y acabado en cuero vegano"
+    ],
+    "badge": {
+      "label": "TIENDA OFICIAL MOTOROLA",
+      "tone": "hot"
+    },
+    "images": [
+      "img/do-014/1-1i2c17.webp",
+      "img/do-014/2-4u5h4y.webp",
+      "img/do-014/3-5u4l41.webp",
+      "img/do-014/4-1s2p5w.webp"
+    ],
+    "variants": [
+      {
+        "label": "256 GB",
+        "url": "https://meli.la/2hPyiVw"
+      }
+    ]
+  },
+  {
     "code": "DO-013",
     "title": "Moto G86 power",
     "category": "smartphones",
