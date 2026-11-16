@@ -2,6 +2,35 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "DO-012",
+    "title": "Xiaomi 17t",
+    "category": "smartphones",
+    "features": [
+      "Triple cámara Leica con zoom óptico 5x",
+      "Batería de 6.500 mAh con carga rápida de 67W",
+      "Pantalla AMOLED de 6,59\" a 120 Hz",
+      "Procesador MediaTek Dimensity 8500-Ultra y 12 GB de RAM",
+      "Certificación IP68 contra agua y polvo"
+    ],
+    "badge": {
+      "label": "Tienda oficial Xianomi",
+      "tone": "hot"
+    },
+    "images": [
+      "img/do-012/1-600z6z.webp",
+      "img/do-012/2-5h176a.webp",
+      "img/do-012/3-5k6n3w.webp",
+      "img/do-012/4-205002.webp",
+      "img/do-012/5-166d5r.webp"
+    ],
+    "variants": [
+      {
+        "label": "256 GB",
+        "url": "https://meli.la/2b3FyeH"
+      }
+    ]
+  },
+  {
     "code": "DO-011",
     "title": "Xiaomi Redmi 17",
     "category": "smartphones",
