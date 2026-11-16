@@ -12,5 +12,9 @@ export const categories = [
   {
     "slug": "pc-gamer",
     "name": "PC Gamer"
+  },
+  {
+    "slug": "cocina",
+    "name": "Cocina"
   }
 ];
