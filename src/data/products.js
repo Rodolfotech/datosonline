@@ -2,6 +2,29 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "DO-010",
+    "title": "iPhone 18 Pro",
+    "category": "smartphones",
+    "badge": {
+      "label": "APPLE TIENDA OFICIAL",
+      "tone": "hot"
+    },
+    "images": [
+      "img/do-010/1-1w5x2h.webp",
+      "img/do-010/2-054l5i.webp",
+      "img/do-010/3-6r2y5g.webp",
+      "img/do-010/4-32272i.webp",
+      "img/do-010/5-2x6e0f.webp",
+      "img/do-010/6-4l2r31.webp"
+    ],
+    "variants": [
+      {
+        "label": "256 GB",
+        "url": "https://meli.la/2xdCz5g"
+      }
+    ]
+  },
+  {
     "code": "DO-009",
     "title": "Deshuesador 6 Cerezas Y Aceitunas Manual Cocina",
     "category": "cocina",
