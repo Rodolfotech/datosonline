@@ -7,6 +7,7 @@ import {
   nextProductCode,
   productsInTab,
   removeCategory,
+  renameCategory,
   removeProduct,
   removedImagePaths,
   resolveCategory,
@@ -178,4 +179,26 @@ test("removeCategory refuses a category with products, unavailable ones included
 
 test("removeCategory refuses a category that does not exist", () => {
   assert.throws(() => removeCategory([], [], "cocina"), /ya no existe/);
+});
+
+test("renameCategory changes the shown name and keeps the code", () => {
+  const cats = [{ slug: "cocina", name: "Cocina" }, { slug: "smartphones", name: "Smartphones" }];
+  const renamed = renameCategory(cats, "cocina", "  Cocina   y hogar ");
+  assert.deepEqual(renamed[0], { slug: "cocina", name: "Cocina y hogar" });
+  assert.deepEqual(renamed[1], cats[1]);
+  assert.equal(cats[0].name, "Cocina");
+});
+
+test("renameCategory refuses empty, reserved, duplicated or unknown names", () => {
+  const cats = [{ slug: "cocina", name: "Cocina" }, { slug: "smartphones", name: "Smartphones" }];
+  assert.throws(() => renameCategory(cats, "cocina", "   "), /necesita un nombre/);
+  assert.throws(() => renameCategory(cats, "cocina", "No disponible"), /no se puede usar/);
+  assert.throws(() => renameCategory(cats, "cocina", "smartphones"), /Ya existe/);
+  assert.throws(() => renameCategory(cats, "cocina", "SMARTPHONÉS"), /Ya existe/);
+  assert.throws(() => renameCategory(cats, "tecnologia", "Tecnología"), /ya no existe/);
+});
+
+test("renameCategory allows keeping the same name in the same category", () => {
+  const cats = [{ slug: "cocina", name: "Cocina" }];
+  assert.deepEqual(renameCategory(cats, "cocina", "cocina"), [{ slug: "cocina", name: "cocina" }]);
 });

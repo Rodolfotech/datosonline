@@ -8,6 +8,7 @@ import {
   nextProductCode,
   removeCategory,
   removeProduct,
+  renameCategory,
   removedImagePaths,
   resolveCategory,
   slugify,
@@ -49,7 +50,7 @@ window.addEventListener("drop", (event) => event.preventDefault());
 // Products per page in the list, and the tab (category) and page in view.
 const LIST_PAGE_SIZE = 12;
 const SEARCH_DELAY_MS = 250;
-const state = { client: null, catalog: null, form: null, listTab: "", listPage: 1, listQuery: "" };
+const state = { client: null, catalog: null, form: null, listTab: "", listPage: 1, listQuery: "", editingCategory: null };
 let saving = false;
 
 function createClient(token) {
@@ -208,11 +209,24 @@ function categoriesHtml() {
   const rows = categories.map((category) => {
     const used = products.filter((product) => product.category === category.slug).length;
     const name = escapeHtml(category.name);
-    const button = used === 0
+    const deleteButton = used === 0
       ? `<button type="button" data-delete-category="${escapeHtml(category.slug)}" aria-label="Eliminar la categoría ${name}" class="button button--danger button--small">Eliminar</button>`
       : `<button type="button" disabled aria-label="No se puede eliminar ${name}: tiene ${used} productos" class="button button--small">Eliminar</button>`;
     const note = used === 0 ? "Vacía" : `${productCountLabel(used)}. Muévelos o elimínalos para poder borrarla.`;
-    return `<li class="category-row"><div><p class="category-row__name">${name}</p><p class="category-row__note">${note}</p></div>${button}</li>`;
+    if (state.editingCategory === category.slug) {
+      return `<li class="category-row category-row--editing">
+        <div class="category-row__edit">
+          <label for="category-name-${escapeHtml(category.slug)}" class="field__label">Nombre de la categoría</label>
+          <input id="category-name-${escapeHtml(category.slug)}" type="text" value="${name}" autocomplete="off" class="field__input" />
+          <div class="category-row__actions">
+            <button type="button" data-save-category="${escapeHtml(category.slug)}" class="button button--primary button--small">Guardar</button>
+            <button type="button" data-cancel-category class="button button--small">Cancelar</button>
+          </div>
+        </div>
+      </li>`;
+    }
+    const editButton = `<button type="button" data-edit-category="${escapeHtml(category.slug)}" aria-label="Cambiar el nombre de ${name}" class="button button--small">Editar</button>`;
+    return `<li class="category-row"><div><p class="category-row__name">${name}</p><p class="category-row__note">${note}</p></div><div class="category-row__actions">${editButton}${deleteButton}</div></li>`;
   }).join("");
   return `
     <details class="categories" open>
@@ -822,6 +836,24 @@ root.addEventListener("click", (event) => {
     handleDeleteCategory(deleteButton.dataset.deleteCategory);
     return;
   }
+  if (!state.catalog) return;
+  const editButton = event.target.closest("[data-edit-category]");
+  if (editButton) {
+    state.editingCategory = editButton.dataset.editCategory;
+    showCatalog();
+    root.querySelector(`#category-name-${CSS.escape(state.editingCategory)}`)?.focus();
+    return;
+  }
+  if (event.target.closest("[data-cancel-category]")) {
+    state.editingCategory = null;
+    showCatalog();
+    return;
+  }
+  const saveButton = event.target.closest("[data-save-category]");
+  if (saveButton) {
+    handleRenameCategory(saveButton.dataset.saveCategory);
+    return;
+  }
   const tab = event.target.closest("[data-tab]");
   if (!tab || !state.catalog) return;
   state.listTab = tab.dataset.tab;
@@ -829,6 +861,50 @@ root.addEventListener("click", (event) => {
   state.listPage = 1;
   showCatalog();
 });
+
+// Changes the name of a category as one commit that changes only the
+// categories file. The code stays, so the products keep their category.
+async function handleRenameCategory(slug) {
+  const { products, categories } = state.catalog;
+  const current = categories.find((item) => item.slug === slug);
+  const input = root.querySelector(`#category-name-${CSS.escape(slug)}`);
+  if (!current || !input) return;
+
+  let remaining;
+  try {
+    remaining = renameCategory(categories, slug, input.value);
+  } catch (failure) {
+    showCatalog({ error: failure.message });
+    root.querySelector(`#category-name-${CSS.escape(slug)}`)?.focus();
+    return;
+  }
+  const newName = remaining.find((item) => item.slug === slug).name;
+
+  saving = true;
+  try {
+    await state.client.publish({
+      base: state.catalog,
+      products,
+      categories: remaining,
+      newImages: [],
+      removedImages: [],
+      message: `Panel: renombra la categoría "${current.name}" a "${newName}"`,
+    });
+    state.catalog = await state.client.loadCatalog();
+  } catch (failure) {
+    saving = false;
+    if (failure.code === "invalid-token" || failure.code === "no-access") {
+      clearToken();
+      showSignIn(failure.message);
+      return;
+    }
+    showCatalog({ error: failure.message });
+    return;
+  }
+  saving = false;
+  state.editingCategory = null;
+  showCatalog({ notice: `La categoría ahora se llama "${newName}". El cambio se verá en datosonline.cl en unos minutos.` });
+}
 
 // Deletes an empty category as one commit that changes only the categories file.
 async function handleDeleteCategory(slug) {
