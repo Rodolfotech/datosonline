@@ -2,6 +2,25 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-12",
+    "title": "Zapatilla Hombre",
+    "category": "zapatillas",
+    "badge": {
+      "label": "Envio Gratis",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-12/1-3v1y4v.webp",
+      "img/a-12/2-3p631x.webp",
+      "img/a-12/3-213y4e.webp",
+      "img/a-12/4-360w2e.webp",
+      "img/a-12/5-4p4k5j.webp",
+      "img/a-12/6-002s1o.webp",
+      "img/a-12/7-5v5u3x.webp"
+    ],
+    "url": "https://meli.la/21wdokL"
+  },
+  {
     "code": "A-11",
     "title": "Moto G06",
     "category": "smartphones",
