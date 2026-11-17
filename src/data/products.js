@@ -264,6 +264,10 @@ export const products = [
       "Zoom óptico 10x",
       "Funciones Galaxy AI"
     ],
+    "badge": {
+      "label": "TIENDA OFICIAL SAMSUNG",
+      "tone": "hot"
+    },
     "images": [
       "img/do-004/duo.webp",
       "img/do-004/front.webp",
