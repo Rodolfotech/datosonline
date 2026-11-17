@@ -5,6 +5,10 @@ export const products = [
     "code": "A-13",
     "title": "Zapatilla Mujer",
     "category": "zapatillas",
+    "badge": {
+      "label": "ENVIO GRATIS",
+      "tone": "hot"
+    },
     "images": [
       "img/a-13/1-604y4r.webp",
       "img/a-13/2-134p4r.webp",
