@@ -158,7 +158,7 @@ El sitio no tiene servidor: los cambios se guardan en el repositorio de GitHub d
 
 ## Fuera de alcance
 
-- Renombrar, reordenar o eliminar categorías.
+- Renombrar o reordenar categorías.
 - Borradores o productos ocultos (un producto no disponible sigue visible).
 - Cambiar el texto, los colores o el diseño de la cinta; solo se elige su posición.
 - Avisar al visitante cuando un producto vuelve a estar disponible.
@@ -227,6 +227,7 @@ Estos requisitos los pidió el dueño en la conversación después de aprobar la
 - RF-P6. EL SISTEMA debe mostrar al dueño el código de cada producto en el listado y en el formulario, para ponerlo en el reel. *Estado: hecho (listado y formulario de edición).*
 - RF-P7. EL SISTEMA debe permitir elegir el color de la etiqueta entre naranja, amarillo, verde, violeta, gris, negro y plateado. *Estado: hecho.*
 - RF-P8. CUANDO el dueño escribe en el buscador del panel, EL SISTEMA debe mostrar todos los productos, disponibles o no, cuyo código o nombre coincida, en cualquier categoría, y paginar el resultado. Si no hay coincidencias, debe decir que el nombre no existe. *Estado: hecho.*
+- RF-P9. CUANDO el dueño elige eliminar una categoría que no tiene productos (ni disponibles ni no disponibles), EL SISTEMA debe pedir confirmación con el modal, eliminar la categoría del catálogo y dejar de mostrarla en el sitio. SI la categoría tiene productos, ENTONCES EL SISTEMA no debe eliminarla y debe indicar cuántos productos la usan. *Estado: en curso (2026-11-17).*
 
 ### Fuera de alcance del anexo
 

@@ -6,6 +6,7 @@ import {
   isReservedCategoryName,
   nextProductCode,
   productsInTab,
+  removeCategory,
   removeProduct,
   removedImagePaths,
   resolveCategory,
@@ -160,4 +161,21 @@ test("productsInTab shows the same products as the site for each tab", () => {
   assert.deepEqual(codes(productsInTab(list, "no-disponible")), ["DO-002"]);
   assert.deepEqual(productsInTab(list, "cocina"), []);
   assert.equal(list.length, 3);
+});
+
+test("removeCategory deletes an empty category and keeps the others", () => {
+  const cats = [{ slug: "smartphones", name: "Smartphones" }, { slug: "cocina", name: "Cocina" }];
+  const list = [{ code: "A-01", category: "smartphones" }];
+  assert.deepEqual(removeCategory(cats, list, "cocina"), [{ slug: "smartphones", name: "Smartphones" }]);
+  assert.equal(cats.length, 2);
+});
+
+test("removeCategory refuses a category with products, unavailable ones included", () => {
+  const cats = [{ slug: "cocina", name: "Cocina" }];
+  assert.throws(() => removeCategory(cats, [{ code: "A-01", category: "cocina" }], "cocina"), /1 producto/);
+  assert.throws(() => removeCategory(cats, [{ code: "A-01", category: "cocina", available: false }, { code: "A-02", category: "cocina" }], "cocina"), /2 productos/);
+});
+
+test("removeCategory refuses a category that does not exist", () => {
+  assert.throws(() => removeCategory([], [], "cocina"), /ya no existe/);
 });

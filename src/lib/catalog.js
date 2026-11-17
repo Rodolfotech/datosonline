@@ -85,6 +85,15 @@ export function removedImagePaths(before, after) {
   return imagePaths(before).filter((image) => !kept.has(image));
 }
 
+// Removes a category that no product uses. Refuses otherwise, and says how
+// many products use it, so the owner knows what to move or delete first.
+export function removeCategory(categories, products, slug) {
+  const used = products.filter((product) => product.category === slug).length;
+  if (used > 0) throw new Error(`Esta categoría tiene ${used} ${used === 1 ? "producto" : "productos"}. Muévelos o elimínalos antes de borrarla.`);
+  if (!categories.some((category) => category.slug === slug)) throw new Error("La categoría ya no existe.");
+  return categories.filter((category) => category.slug !== slug);
+}
+
 // Products listed under one tab of the panel. The tabs follow the site: "Todo"
 // and each category show the available products; "No disponible" shows the
 // unavailable ones.

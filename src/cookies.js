@@ -32,18 +32,23 @@ function startMeasuring() {
   document.head.append(tagManager);
 }
 
+// While the banner is open, the end of the page gets room so it does not
+// cover the footer links.
 function openBanner() {
   document.querySelector(".cookie-banner")?.remove();
+  document.body.classList.add("has-cookie-banner");
   const banner = renderCookieBanner({
     onAccept: (element) => {
       saveConsent(choiceStorage(), ACCEPTED);
       element.remove();
+      document.body.classList.remove("has-cookie-banner");
       startMeasuring();
     },
     onReject: (element) => {
       const wasAccepted = mayMeasure(readConsent(choiceStorage()));
       saveConsent(choiceStorage(), REJECTED);
       element.remove();
+      document.body.classList.remove("has-cookie-banner");
       // The tools loaded before this choice cannot be unloaded: reload to stop them.
       if (wasAccepted) window.location.reload();
     },
