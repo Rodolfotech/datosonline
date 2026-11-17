@@ -94,6 +94,18 @@ export function removeCategory(categories, products, slug) {
   return categories.filter((category) => category.slug !== slug);
 }
 
+// Changes the name shown for a category. The code (slug) does not change, so
+// the products stay in it. A name must not be empty, reserved or already used.
+export function renameCategory(categories, slug, newName) {
+  const name = String(newName ?? "").trim().replace(/\s+/g, " ");
+  if (!slugify(name)) throw new Error("La categoría necesita un nombre.");
+  if (isReservedCategoryName(name)) throw new Error('"No disponible" no se puede usar como nombre de categoría.');
+  const clash = categories.some((category) => category.slug !== slug && slugify(category.name) === slugify(name));
+  if (clash) throw new Error("Ya existe una categoría con ese nombre.");
+  if (!categories.some((category) => category.slug === slug)) throw new Error("La categoría ya no existe.");
+  return categories.map((category) => (category.slug === slug ? { ...category, name } : category));
+}
+
 // Products listed under one tab of the panel. The tabs follow the site: "Todo"
 // and each category show the available products; "No disponible" shows the
 // unavailable ones.

@@ -609,3 +609,19 @@ select.field__input {
 .category-row .button:disabled {
   cursor: not-allowed;
 }
+
+.category-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-row__edit {
+  display: grid;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.category-row__edit .field__input {
+  margin-top: 0;
+}
