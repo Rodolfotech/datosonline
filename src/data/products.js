@@ -208,6 +208,10 @@ export const products = [
       "Conectividad: 5G, eSIM + Nano-SIM (Dual SIM),",
       "riple cámara trasera de 50 Mpx (principal f/1.8) + 12 Mpx (gran angular f/2.2)"
     ],
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/do-008/3-6o200f.webp",
       "img/do-008/2-6y6846.webp",
