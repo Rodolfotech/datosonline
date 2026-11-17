@@ -3,7 +3,8 @@ import { categories } from "../data/categories.js";
 import { escapeHtml } from "../lib/categories.js";
 
 const SHARE_FEEDBACK_MS = 2500;
-const PRICE_POPOVER_TEXT = "Al presionar el botón serás redirigido para ver el producto en Mercado Libre.";
+const AFFILIATE_NOTICE_TEXT = "Te llevamos a Mercado Libre. Si compras dentro de las 24 horas desde que entras por este enlace, DatosOnline recibe una comisión sin costo extra para ti.";
+const INFO_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"><circle cx="12" cy="12" r="9.25"/><path d="M12 11v5.5M12 7.5h.01"/></svg>`;
 const PRICE_LABEL = "Ver precio en Mercado Libre";
 
 const EXTERNAL_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
@@ -99,9 +100,16 @@ class ProductCard extends HTMLElement {
   }
 
   render() {
-    const { title, category, subcategory, badge, images, available, ribbon, cardId } = this.#product;
+    const { code, category, subcategory, badge, images, available, ribbon, cardId } = this.#product;
     const safeTitle = escapeHtml(this.displayTitle());
     const meta = [categoryName(category), subcategory].filter(Boolean).map(escapeHtml).join(' <span aria-hidden="true">·</span> ');
+    // The affiliate notice is an icon beside the category: it shows on hover,
+    // focus or tap, so the card does not carry extra text.
+    const infoHtml = available
+      ? `<info-popover text="${escapeHtml(AFFILIATE_NOTICE_TEXT)}">
+            <button type="button" aria-label="Información sobre la comisión de DatosOnline" class="card__info">${INFO_ICON}</button>
+          </info-popover>`
+      : "";
 
     const hasGallery = images.length > 1;
     const photoAlt = (index) => (hasGallery ? `${safeTitle}, foto ${index + 1} de ${images.length}` : safeTitle);
@@ -126,11 +134,9 @@ class ProductCard extends HTMLElement {
     // An unavailable product keeps its place on the site but none of its
     // controls opens Mercado Libre: its links may no longer work.
     const priceHtml = available ? `
-            <info-popover text="${PRICE_POPOVER_TEXT}">
-              <a data-price-link href="${escapeHtml(this.link.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
-                <span data-price-label>${PRICE_LABEL}</span> ${EXTERNAL_ICON}
-              </a>
-            </info-popover>` : `
+            <a data-price-link href="${escapeHtml(this.link.url)}" target="_blank" rel="sponsored nofollow noopener noreferrer" aria-label="${escapeHtml(this.priceAriaLabel())}" class="card__price">
+              <span data-price-label>${PRICE_LABEL}</span> ${EXTERNAL_ICON}
+            </a>` : `
             <button type="button" disabled aria-label="${safeTitle} no está disponible" class="card__price">No disponible</button>`;
 
     this.innerHTML = `
@@ -142,7 +148,11 @@ class ProductCard extends HTMLElement {
           <div class="card__tags">${badgeHtml}</div>
         </div>
         <div class="card__body">
-          <p class="card__meta">${meta}</p>
+          <p class="card__code">Código <strong>${escapeHtml(code)}</strong></p>
+          <div class="card__meta-row">
+            <p class="card__meta">${meta}</p>
+            ${infoHtml}
+          </div>
           <h3 class="card__title">${safeTitle}</h3>
           <div class="card__actions">
             ${priceHtml}

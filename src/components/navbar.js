@@ -6,7 +6,6 @@ import { logoHtml } from "./logo.js";
 // Categories shown directly in the desktop bar; the rest go under "Más".
 const MAX_VISIBLE_CATEGORIES = 4;
 
-const SEARCH_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>`;
 const MENU_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`;
 
 function categoryLink(category, activeSlug) {
@@ -91,7 +90,6 @@ class SiteNavbar extends HTMLElement {
                 ${moreMenu}
               </ul>
             </nav>
-            <a href="./#buscador" aria-label="Buscar productos" class="icon-button">${SEARCH_ICON}</a>
             <button type="button" data-menu-toggle aria-expanded="false" aria-controls="navbar-mobile-menu" aria-label="Menú de categorías" class="icon-button navbar__menu-toggle">${MENU_ICON}</button>
           </div>
         </div>

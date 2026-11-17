@@ -58,7 +58,7 @@ El sitio no tiene servidor: los cambios se guardan en el repositorio de GitHub d
 
 - RF-11. CUANDO el dueño elige "Agregar producto", EL SISTEMA debe mostrar un formulario con: título, categoría, subcategoría (opcional), características (opcional, hasta 6), etiqueta con su estilo (opcional), fotos (opcional) y enlace de afiliado, ya sea uno solo o uno por versión con su nombre (por ejemplo "256 GB").
 - RF-12. CUANDO el dueño agrega un producto, EL SISTEMA debe asignarle automáticamente un código interno único, sin pedírselo al dueño y sin relación con el número de reel.
-- RF-50. EL SISTEMA no debe mostrar el código interno a los visitantes en el sitio público.
+- RF-50. (Reemplazado el 2026-11-16 por RF-C3: el código sí se muestra al visitante.)
 - RF-13. CUANDO el dueño elige editar un producto, EL SISTEMA debe mostrar el mismo formulario con los datos actuales del producto cargados.
 - RF-14. SI falta el título, la categoría o el enlace de afiliado, ENTONCES EL SISTEMA debe impedir continuar y señalar el campo que falta.
 - RF-15. SI un enlace de afiliado no es un enlace corto entregado por Mercado Libre (comienza con `https://meli.la/` seguido de su código), ENTONCES EL SISTEMA debe impedir continuar y señalar el enlace incorrecto.
@@ -194,4 +194,49 @@ Ninguna.
 
 - Dirección del panel: el dueño acepta que la protección real es la credencial; la dirección poco obvia (RF-38) es solo disuasiva, porque el repositorio es público.
 - Constitución: `docs/constitution.md` aprobada el 2026-11-15; esta spec no contradice ninguno de sus seis principios.
-- Código interno: deja de mostrarse en las cards públicas (RF-50).
+- Código interno: se muestra en cada tarjeta para buscarlo desde el reel (RF-C3, reemplaza RF-50).
+- Código interno: formato `A-000001`, asignado en orden de publicación. Los productos existentes se renumeraron el 2026-11-16; los códigos `DO-…` nunca se publicaron.
+
+## Anexo: cambios posteriores a la aprobación (2026-11-16)
+
+Estos requisitos los pidió el dueño en la conversación después de aprobar la spec. Se documentan aquí para que el código y la spec coincidan antes de subir los cambios. El estado indica lo que ya está hecho y probado en el navegador (con un GitHub simulado en el caso del panel) y lo que falta.
+
+### Catálogo público
+
+- RF-C1. CUANDO un producto tiene varias versiones, EL SISTEMA debe mostrar una tarjeta por versión, cada una con su propio enlace de Mercado Libre. *Estado: hecho, pendiente de aprobación del dueño.*
+- RF-C2. EL SISTEMA debe mostrar en el título de la tarjeta la versión ("iPhone 17 Pro Max • 512 GB") y, en lugar del selector de versiones, un botón "Ver precio en Mercado Libre" que abre el enlace de esa versión. *Estado: hecho, pendiente de aprobación.*
+- RF-C3. EL SISTEMA debe mostrar el código del producto en cada tarjeta, arriba de la categoría, en letra de 13 px. *Estado: hecho.*
+- RF-C4. EL SISTEMA debe permitir un enlace directo a cada tarjeta con la dirección `datosonline.cl/#<identificador>`, donde el identificador sale del nombre y la versión (por ejemplo `#iphone-17-pro-max-512-gb`). *Estado: hecho en la página; el enlace no se ha probado en Facebook.*
+- RF-C5. SI el visitante escribe en el buscador, ENTONCES EL SISTEMA debe mostrar solo los productos disponibles de todas las categorías que coincidan con el código (por ejemplo `A-000001`, `a1` o `A 1`) o con todas las palabras del nombre, versión, categoría o subcategoría, sin distinguir mayúsculas ni tildes. *Estado: hecho.*
+- RF-C6. CUANDO el visitante escribe o envía el buscador, EL SISTEMA debe guardar la búsqueda en la dirección (`?buscar=…`) para poder compartirla o usarla en la biografía de Instagram. *Estado: hecho.*
+- RF-C7. SI la búsqueda no encuentra nada, ENTONCES EL SISTEMA debe decir "El nombre «…» no existe en el catálogo" y sugerir buscar por código. *Estado: hecho.*
+- RF-C8. EL SISTEMA debe mostrar el campo de búsqueda arriba del listado y no debe tener ícono de lupa en el menú. *Estado: hecho.*
+- RF-C9. EL SISTEMA debe mostrar 12 tarjetas por página en todas las categorías, guardar la página en la dirección (`?pagina=N`) y ocultar el paginador cuando hay una sola página. *Estado: hecho.*
+- RF-C10. EL SISTEMA debe mostrar un aviso de la regla de Mercado Libre (24 horas para comprar desde el enlace, comisión para DatosOnline) en un ícono de información junto a la categoría de cada tarjeta disponible, que se abre al pasar el mouse, al enfocarlo o al tocarlo, y en el pie de página. *Estado: hecho; la redacción debe verificarse con las condiciones actuales del programa de afiliados.*
+- RF-C11. EL SISTEMA no debe mostrar características en la tarjeta ni nota bajo el botón. El popover del botón "Ver precio" se quitó; el componente reutilizable se conserva. *Estado: hecho.*
+- RF-C12. EL SISTEMA debe usar el ícono "D" de la marca como favicon, incrustado en el HTML. *Estado: hecho; confirmar en datosonline.cl después de publicar.*
+- RF-C13. EL SISTEMA debe usar códigos con formato `A-000001`, asignados en orden de publicación, y renumerar los productos existentes con ese orden. Esto reemplaza el formato `DO-…` de RF-12. *Estado: hecho en el archivo de datos local; cambiará los códigos del sitio al publicarse.*
+
+### Panel de administración
+
+- RF-P1. EL SISTEMA debe mostrar en el panel pestañas con "Todo" y las mismas categorías del sitio, con "No disponible" solo cuando haya productos en ese estado, y que crezcan cuando se agreguen categorías. *Estado: hecho.*
+- RF-P2. EL SISTEMA debe mostrar la lista de cada pestaña con paginador de 12 productos por página. *Estado: hecho.*
+- RF-P3. EL SISTEMA no debe permitir agregar características ni versiones adicionales desde el formulario. Las características existentes se conservan en los datos. *Estado: hecho.*
+- RF-P4. EL SISTEMA debe permitir arrastrar fotos sobre la sección de fotos del formulario, además del botón. *Estado: hecho.*
+- RF-P5. CUANDO el archivo de productos de GitHub no tiene el formato que el panel puede leer, ENTONCES EL SISTEMA debe explicarlo sin culpar al dueño, con el texto aprobado. *Estado: hecho.*
+- RF-P6. EL SISTEMA debe mostrar al dueño el código de cada producto en el listado y en el formulario, para ponerlo en el reel. *Estado: hecho (listado y formulario de edición).*
+- RF-P7. EL SISTEMA debe permitir elegir el color de la etiqueta entre naranja, amarillo, verde, violeta, gris, negro y plateado. *Estado: hecho.*
+- RF-P8. CUANDO el dueño escribe en el buscador del panel, EL SISTEMA debe mostrar todos los productos, disponibles o no, cuyo código o nombre coincida, en cualquier categoría, y paginar el resultado. Si no hay coincidencias, debe decir que el nombre no existe. *Estado: hecho.*
+
+### Fuera de alcance del anexo
+
+- Búsqueda que tolera errores de escritura.
+- Páginas propias por producto (para Facebook); requeriría una decisión nueva.
+- Que el botón de compartir copie el enlace del sitio: pendiente de decisión del dueño.
+- Mostrar el número de productos separado del número de tarjetas.
+
+### Verificación
+
+- Tests automáticos: 114 de 114 con `node --test`.
+- Navegador: cada requisito marcado como hecho se comprobó en Chrome, a 1280 px y 375 px, con datos reales del repositorio o un GitHub simulado. Las acciones que escriben en GitHub (publicar, eliminar) se probaron solo con GitHub simulado; la prueba con el repositorio real la hace el dueño.
+

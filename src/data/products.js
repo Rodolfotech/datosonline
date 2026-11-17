@@ -2,7 +2,7 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
-    "code": "DO-014",
+    "code": "A-000011",
     "title": "Moto G06",
     "category": "smartphones",
     "features": [
@@ -30,7 +30,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-013",
+    "code": "A-000010",
     "title": "Moto G86 power",
     "category": "smartphones",
     "features": [
@@ -58,7 +58,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-012",
+    "code": "A-000009",
     "title": "Xiaomi 17t",
     "category": "smartphones",
     "features": [
@@ -87,7 +87,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-011",
+    "code": "A-000008",
     "title": "Xiaomi Redmi 17",
     "category": "smartphones",
     "features": [
@@ -117,7 +117,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-010",
+    "code": "A-000007",
     "title": "iPhone 18 Pro",
     "category": "smartphones",
     "features": [
@@ -147,7 +147,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-009",
+    "code": "A-000006",
     "title": "Deshuesador 6 Cerezas Y Aceitunas Manual Cocina",
     "category": "cocina",
     "features": [
@@ -166,7 +166,7 @@ export const products = [
     "url": "https://meli.la/1YHMQxU"
   },
   {
-    "code": "DO-008",
+    "code": "A-000005",
     "title": "Samsung Galaxy A57 5G",
     "category": "smartphones",
     "features": [
@@ -190,7 +190,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-001",
+    "code": "A-000001",
     "title": "iPhone 17 Pro Max",
     "category": "smartphones",
     "features": [
@@ -221,7 +221,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-004",
+    "code": "A-000002",
     "title": "Samsung Galaxy S26 Ultra",
     "category": "smartphones",
     "features": [
@@ -247,7 +247,7 @@ export const products = [
     ]
   },
   {
-    "code": "DO-005",
+    "code": "A-000003",
     "title": "PC Gamer AMD Ryzen 7 5700G",
     "category": "pc-gamer",
     "subcategory": "Computadores",
@@ -271,7 +271,7 @@ export const products = [
     "url": "https://meli.la/2QGS1m7"
   },
   {
-    "code": "DO-007",
+    "code": "A-000004",
     "title": "Colchón Emma Hybrid Premium 2 Plazas",
     "category": "colchones",
     "subcategory": "2 plazas",

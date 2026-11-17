@@ -36,7 +36,7 @@ class SiteFooter extends HTMLElement {
             </nav>
             <div>
               <h2 class="footer__title">Transparencia</h2>
-              <p class="footer__disclosure">DatosOnline participa en el Programa de Afiliados de Mercado Libre. Si compras desde un enlace de esta web, puedo recibir una pequeña comisión <strong>sin costo extra para ti</strong>. El precio, stock, envío y garantía los define cada vendedor en Mercado Libre.</p>
+              <p class="footer__disclosure">DatosOnline participa en el Programa de Afiliados de Mercado Libre. Si compras desde un enlace de esta web, puedo recibir una pequeña comisión <strong>sin costo extra para ti</strong>. Si compras dentro de las 24 horas desde que entras por el enlace, la comisión es para DatosOnline. El precio, stock, envío y garantía los define cada vendedor en Mercado Libre.</p>
             </div>
           </div>
           <div class="footer__bottom">

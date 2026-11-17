@@ -5,6 +5,7 @@ import {
   describeChange,
   isReservedCategoryName,
   nextProductCode,
+  productsInTab,
   removeProduct,
   removedImagePaths,
   resolveCategory,
@@ -27,14 +28,15 @@ const frozen = (value) => {
 };
 
 test("nextProductCode continues after the highest existing code", () => {
-  assert.equal(nextProductCode(products), "DO-008");
-  assert.equal(nextProductCode([]), "DO-001");
-  assert.equal(nextProductCode([{ code: "DO-099" }]), "DO-100");
-  assert.equal(nextProductCode([{ code: "DO-999" }]), "DO-1000");
+  assert.equal(nextProductCode(products), "A-000001");
+  assert.equal(nextProductCode([]), "A-000001");
+  assert.equal(nextProductCode([{ code: "A-000099" }]), "A-000100");
+  assert.equal(nextProductCode([{ code: "A-999999" }]), "A-1000000");
+  assert.equal(nextProductCode([{ code: "A-000011" }, { code: "A-000003" }]), "A-000012");
 });
 
 test("nextProductCode ignores codes with another shape", () => {
-  assert.equal(nextProductCode([{ code: "X-500" }, { code: "DO-002" }, { code: undefined }, { code: "DO-abc" }]), "DO-003");
+  assert.equal(nextProductCode([{ code: "X-500" }, { code: "DO-002" }, { code: undefined }, { code: "A-abc" }]), "A-000001");
 });
 
 test("slugify removes accents, capitals and symbols", () => {
@@ -144,4 +146,18 @@ test("no catalog function changes the data it receives", () => {
   nextProductCode(list);
   assert.deepEqual(list, products);
   assert.deepEqual(cats, categories);
+});
+
+test("productsInTab shows the same products as the site for each tab", () => {
+  const list = [
+    { code: "DO-001", category: "smartphones" },
+    { code: "DO-002", category: "smartphones", available: false },
+    { code: "DO-003", category: "colchones" },
+  ];
+  assert.deepEqual(codes(productsInTab(list, "")), ["DO-001", "DO-003"]);
+  assert.deepEqual(codes(productsInTab(list, "smartphones")), ["DO-001"]);
+  assert.deepEqual(codes(productsInTab(list, "colchones")), ["DO-003"]);
+  assert.deepEqual(codes(productsInTab(list, "no-disponible")), ["DO-002"]);
+  assert.deepEqual(productsInTab(list, "cocina"), []);
+  assert.equal(list.length, 3);
 });

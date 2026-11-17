@@ -3,6 +3,7 @@
 import { confirmDialog } from "../src/components/confirm-dialog.js";
 import {
   addProduct,
+  productsInTab,
   describeChange,
   nextProductCode,
   removeProduct,
@@ -11,7 +12,9 @@ import {
   slugify,
   updateProduct,
 } from "../src/lib/catalog.js";
-import { escapeHtml } from "../src/lib/categories.js";
+import { escapeHtml, getSiteCategories } from "../src/lib/categories.js";
+import { pageSlice } from "../src/lib/pagination.js";
+import { searchCards } from "../src/lib/search.js";
 import {
   MAX_IMAGES,
   NEW_CATEGORY,
@@ -26,6 +29,7 @@ import {
   validateProductForm,
 } from "../src/lib/product-form.js";
 import { normalizeProduct, productCountLabel } from "../src/lib/products.js";
+import "../src/components/pager.js";
 import "../src/components/product-card.js";
 import { GithubError, createGithubClient } from "./github-client.js";
 import { preparePhoto } from "./photos.js";
@@ -41,7 +45,10 @@ window.addEventListener("dragover", (event) => event.preventDefault());
 window.addEventListener("drop", (event) => event.preventDefault());
 
 // What the panel knows while the session is open.
-const state = { client: null, catalog: null, form: null };
+// Products per page in the list, and the tab (category) and page in view.
+const LIST_PAGE_SIZE = 12;
+const SEARCH_DELAY_MS = 250;
+const state = { client: null, catalog: null, form: null, listTab: "", listPage: 1, listQuery: "" };
 let saving = false;
 
 function createClient(token) {
@@ -163,6 +170,7 @@ function productRow(product) {
       </div>
       <div class="product-row__text">
         <p class="product-row__title">${safeTitle}</p>
+        <p class="product-row__code">Código <strong>${escapeHtml(product.code)}</strong></p>
         <p class="product-row__meta">${escapeHtml(categoryName)}</p>
         ${product.available === false ? `<p class="product-row__flag">No disponible</p>` : ""}
       </div>
@@ -174,8 +182,45 @@ function productRow(product) {
 }
 
 // `notice` is a confirmation and `error` a problem; both are optional.
+// The tabs are the same categories as the site, so the owner sees what the
+// visitor sees.
+function tabsHtml() {
+  const { products, categories } = state.catalog;
+  const tabs = [{ slug: "", name: "Todo" }, ...getSiteCategories(categories, products)];
+  return `
+    <nav aria-label="Categorías de productos" class="tabs">
+      ${tabs.map((tab) => `<button type="button" data-tab="${escapeHtml(tab.slug)}"${tab.slug === state.listTab ? ' aria-current="page"' : ""} class="tab">${escapeHtml(tab.name)}</button>`).join("")}
+    </nav>`;
+}
+
+function categoryNameOf(slug) {
+  const { categories } = state.catalog;
+  return categories.find((category) => category.slug === slug)?.name ?? "";
+}
+
+// The search looks in every product, including the unavailable ones, so the
+// owner can find any product. Without a search, the tabs decide the list.
 function showCatalog({ notice = "", error = "" } = {}) {
   const { products } = state.catalog;
+  const searching = state.listQuery !== "";
+  const list = searching
+    ? searchCards(products, state.listQuery, categoryNameOf)
+    : productsInTab(products, state.listTab);
+  const { items, page, pages } = pageSlice(list, state.listPage, LIST_PAGE_SIZE);
+  state.listPage = page;
+
+  // Redrawing replaces the search field: keep the focus and the cursor while
+  // the owner is typing in it.
+  const hadFocus = document.activeElement?.id === "panel-search";
+  const cursor = hadFocus ? document.activeElement.selectionStart : null;
+
+  const countText = searching
+    ? `${productCountLabel(list.length)} para «${escapeHtml(state.listQuery)}»`
+    : `${productCountLabel(list.length)} en esta categoría · ${productCountLabel(products.length)} en el catálogo`;
+  const emptyText = searching
+    ? `El nombre «${escapeHtml(state.listQuery)}» no existe. Revisa cómo está escrito o busca por código, por ejemplo A-000001.`
+    : "Todavía no hay productos en esta categoría.";
+
   root.innerHTML = `
     ${panelHeader()}
     <section class="panel__card" aria-labelledby="catalog-title">
@@ -183,13 +228,26 @@ function showCatalog({ notice = "", error = "" } = {}) {
         <h1 id="catalog-title" class="panel__title">Productos</h1>
         <button type="button" data-add class="button button--primary">Agregar producto</button>
       </div>
-      <p class="panel__count">${productCountLabel(products.length)} en el catálogo</p>
+      <form role="search" data-search-form class="panel__search">
+        <label for="panel-search" class="field__label">Buscar por nombre o código</label>
+        <input id="panel-search" type="search" value="${escapeHtml(state.listQuery)}" placeholder="Ej.: iPhone o A-000001" autocomplete="off" class="field__input" />
+      </form>
+      ${tabsHtml()}
+      <p class="panel__count">${countText}</p>
       <p role="status" class="panel__notice">${escapeHtml(notice)}</p>
       <p role="alert" class="panel__error">${escapeHtml(error)}</p>
-      ${products.length === 0
-        ? `<p class="panel__empty">Todavía no hay productos en el catálogo.</p>`
-        : `<ul class="product-list">${products.map(productRow).join("")}</ul>`}
+      ${list.length === 0
+        ? `<p class="panel__empty">${emptyText}</p>`
+        : `<ul class="product-list">${items.map(productRow).join("")}</ul>
+           <site-pager pages="${pages}" current="${page}"></site-pager>`}
     </section>`;
+
+  if (hadFocus) {
+    const field = root.querySelector("#panel-search");
+    field.focus();
+    const position = Math.min(cursor, field.value.length);
+    field.setSelectionRange(position, position);
+  }
   root.querySelector("[data-signout]").addEventListener("click", signOut);
   root.querySelector("[data-add]").addEventListener("click", () => openProductForm());
   for (const button of root.querySelectorAll("[data-edit]")) {
@@ -408,6 +466,7 @@ function showProductForm({ errors = [], notice = "", error = "" } = {}) {
     ${panelHeader()}
     <section class="panel__card" aria-labelledby="form-title">
       <h1 id="form-title" class="panel__title">${heading}</h1>
+      ${isEditing() ? `<p class="panel__count">Código <strong>${escapeHtml(state.form.code)}</strong></p>` : ""}
       <form data-product-form novalidate class="panel__form">
         <p role="alert" class="panel__error">${escapeHtml(error || (errors.length > 0 ? "Revisa los campos marcados antes de continuar." : ""))}</p>
         <p role="status" class="panel__notice">${escapeHtml(notice)}</p>
@@ -732,6 +791,43 @@ async function handlePublishFailure(failure) {
   }
   showPreview({ error: failure.message });
 }
+
+// Tabs and pages are read from the element that stays on screen, so their
+// listeners are added once, not on every redraw.
+root.addEventListener("click", (event) => {
+  const tab = event.target.closest("[data-tab]");
+  if (!tab || !state.catalog) return;
+  state.listTab = tab.dataset.tab;
+  state.listQuery = "";
+  state.listPage = 1;
+  showCatalog();
+});
+
+// The search waits a moment after the last key, then shows the results.
+let searchTimer = null;
+root.addEventListener("input", (event) => {
+  if (event.target.id !== "panel-search") return;
+  const text = event.target.value;
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => applyPanelSearch(text), SEARCH_DELAY_MS);
+});
+root.addEventListener("submit", (event) => {
+  if (!event.target.matches("[data-search-form]")) return;
+  event.preventDefault();
+  clearTimeout(searchTimer);
+  applyPanelSearch(root.querySelector("#panel-search").value);
+});
+
+function applyPanelSearch(text) {
+  if (!state.catalog) return;
+  state.listQuery = text.trim();
+  state.listPage = 1;
+  showCatalog();
+}
+root.addEventListener("pagechange", (event) => {
+  state.listPage = event.detail.page;
+  showCatalog();
+});
 
 // ---------- Start ----------
 const savedToken = readToken();

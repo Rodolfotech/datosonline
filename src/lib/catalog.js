@@ -3,9 +3,9 @@
 // tested with node --test. No function changes the lists it receives.
 import { UNAVAILABLE_SLUG } from "./products.js";
 
-const CODE_PREFIX = "DO-";
-const CODE_PATTERN = /^DO-(\d+)$/;
-const CODE_DIGITS = 3;
+const CODE_PREFIX = "A-";
+const CODE_PATTERN = /^A-(\d+)$/;
+const CODE_DIGITS = 6;
 // Photos live in img/<folder>/<file>. Anything else is never deleted.
 const IMAGE_PATH = /^img\/(?!.*\.\.)[^/]+(?:\/[^/]+)+$/;
 const CHANGE_VERBS = { add: "agrega", update: "edita", remove: "elimina" };
@@ -83,6 +83,14 @@ function imagePaths(product) {
 export function removedImagePaths(before, after) {
   const kept = new Set(imagePaths(after));
   return imagePaths(before).filter((image) => !kept.has(image));
+}
+
+// Products listed under one tab of the panel. The tabs follow the site: "Todo"
+// and each category show the available products; "No disponible" shows the
+// unavailable ones.
+export function productsInTab(products, slug) {
+  if (slug === UNAVAILABLE_SLUG) return products.filter((product) => product.available === false);
+  return products.filter((product) => product.available !== false && (slug === "" || product.category === slug));
 }
 
 // Message stored with every change made from the panel.
