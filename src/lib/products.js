@@ -82,6 +82,29 @@ export function getVisibleProducts(products, categorySlug = "") {
     .filter((product) => !categorySlug || product.category === categorySlug);
 }
 
+// Identifier of a card, used in the link to it: "iPhone 17 Pro Max" + "512 GB"
+// -> "iphone-17-pro-max-512-gb". Without accents, capitals or symbols.
+export function cardId(title, label = "") {
+  return `${title} ${label}`
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// One card per version: a product with several versions gives one card for
+// each, each with its own link. Same filters as getVisibleProducts.
+export function getCards(products, categorySlug = "") {
+  return getVisibleProducts(products, categorySlug).flatMap((product) =>
+    product.variants.map((variant) => ({
+      ...product,
+      variants: [variant],
+      cardId: cardId(product.title, variant.label),
+    })),
+  );
+}
+
 export function productCountLabel(count) {
   return count === 1 ? "1 producto" : `${count} productos`;
 }

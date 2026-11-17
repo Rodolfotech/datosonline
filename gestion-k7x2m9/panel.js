@@ -16,7 +16,6 @@ import {
   MAX_IMAGES,
   NEW_CATEGORY,
   RIBBON_POSITIONS,
-  canAddFeature,
   canAddImage,
   emptyProductForm,
   isNewPhoto,
@@ -26,7 +25,7 @@ import {
   productToForm,
   validateProductForm,
 } from "../src/lib/product-form.js";
-import { MAX_FEATURES, normalizeProduct, productCountLabel } from "../src/lib/products.js";
+import { normalizeProduct, productCountLabel } from "../src/lib/products.js";
 import "../src/components/product-card.js";
 import { GithubError, createGithubClient } from "./github-client.js";
 import { preparePhoto } from "./photos.js";
@@ -331,23 +330,6 @@ function categoryFields(values, errors) {
     ${isNew ? textField({ id: "newCategory", label: "Nombre de la categoría nueva", value: values.newCategory, errors, help: "Si ya existe una con ese nombre, se usará la existente." }) : ""}`;
 }
 
-function featureFields(values, errors) {
-  const rows = values.features
-    .map((feature, index) => `
-      <li class="row">
-        <input type="text" value="${escapeHtml(feature)}" data-list="features" data-index="${index}" aria-label="Característica ${index + 1}" autocomplete="off" class="field__input" />
-        <button type="button" data-remove-item="features" data-index="${index}" aria-label="Quitar la característica ${index + 1}" class="button button--small">Quitar</button>
-      </li>`)
-    .join("");
-  return `
-    <fieldset class="group">
-      <legend class="group__title">Características <span class="field__optional">(opcional, ${values.features.length} de ${MAX_FEATURES})</span></legend>
-      <ul class="rows">${rows}</ul>
-      ${errorMessage(errors, "features", "features")}
-      <button type="button" data-add-item="features"${canAddFeature(values.features.length) ? "" : " disabled"} class="button button--small">Agregar característica</button>
-    </fieldset>`;
-}
-
 function variantFields(values, errors) {
   const single = values.variants.length === 1;
   const rows = values.variants
@@ -373,10 +355,9 @@ function variantFields(values, errors) {
   return `
     <fieldset class="group">
       <legend class="group__title">Enlace de afiliado</legend>
-      <p class="field__help">Pega el enlace corto que entrega Mercado Libre. Si el producto tiene varias versiones (por ejemplo 256 GB y 512 GB), agrega una por cada enlace.</p>
+      <p class="field__help">Pega el enlace corto que entrega Mercado Libre.</p>
       <ul class="rows">${rows}</ul>
       ${errorMessage(errors, "variants", "variants")}
-      <button type="button" data-add-item="variants" class="button button--small">Agregar versión</button>
     </fieldset>`;
 }
 
@@ -434,7 +415,6 @@ function showProductForm({ errors = [], notice = "", error = "" } = {}) {
         ${categoryFields(values, errors)}
         ${textField({ id: "subcategory", label: "Subcategoría", value: values.subcategory, optional: true, help: 'Por ejemplo "2 plazas".' })}
         ${photoFields(values, errors)}
-        ${featureFields(values, errors)}
         ${badgeFields(values)}
         ${variantFields(values, errors)}
         ${availabilityFields(values, errors)}
@@ -467,8 +447,7 @@ function handleFormInput(event) {
   // The file picker is handled by its own "change" listener.
   if ("photoInput" in control.dataset) return;
 
-  if (control.dataset.list) values[control.dataset.list][index] = control.value;
-  else if (control.dataset.variantField) values.variants[index][control.dataset.variantField] = control.value;
+  if (control.dataset.variantField) values.variants[index][control.dataset.variantField] = control.value;
   else if (control.dataset.field === "unavailable") values.available = !control.checked;
   else if (control.dataset.field) values[control.dataset.field] = control.value;
 
@@ -481,7 +460,6 @@ function handleFormInput(event) {
 
 function handleFormClick(event) {
   const { values } = state.form;
-  const addButton = event.target.closest("[data-add-item]");
   const removeButton = event.target.closest("[data-remove-item]");
   const movePhotoButton = event.target.closest("[data-move-photo]");
   const removePhotoButton = event.target.closest("[data-remove-photo]");
@@ -493,18 +471,9 @@ function handleFormClick(event) {
     state.form.photoMessage = "";
     showProductForm();
     root.querySelector("[data-photos] .file-button input")?.focus();
-  } else if (addButton) {
-    const list = addButton.dataset.addItem;
-    values[list].push(list === "variants" ? { label: "", url: "" } : "");
-    showProductForm();
-    // The new row is the last one of its list.
-    const selector = list === "variants" ? `#variant-${values.variants.length - 1}-label` : `[data-list="features"][data-index="${values.features.length - 1}"]`;
-    root.querySelector(selector)?.focus();
   } else if (removeButton) {
-    const list = removeButton.dataset.removeItem;
-    values[list].splice(Number(removeButton.dataset.index), 1);
+    values.variants.splice(Number(removeButton.dataset.index), 1);
     showProductForm();
-    root.querySelector(`[data-add-item="${list}"]`)?.focus();
   } else if (event.target.closest("[data-cancel]")) {
     cancelProductForm();
   }

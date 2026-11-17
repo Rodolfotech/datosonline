@@ -922,11 +922,14 @@ product-card {
 
 .card__price {
   display: flex;
-  height: 3rem;
+  min-height: 3.5rem;
   flex: 1;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+  text-align: center;
   border: 2px solid var(--ink);
   border-radius: 0.75rem;
   background-color: var(--accent);
