@@ -14,10 +14,6 @@ export const categories = [
     "name": "PC Gamer"
   },
   {
-    "slug": "cocina",
-    "name": "Cocina"
-  },
-  {
     "slug": "zapatillas",
     "name": "Zapatillas"
   }
