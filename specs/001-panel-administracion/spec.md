@@ -215,7 +215,7 @@ Estos requisitos los pidió el dueño en la conversación después de aprobar la
 - RF-C10. EL SISTEMA debe mostrar un aviso de la regla de Mercado Libre (24 horas para comprar desde el enlace, comisión para DatosOnline) en un ícono de información junto a la categoría de cada tarjeta disponible, que se abre al pasar el mouse, al enfocarlo o al tocarlo, y en el pie de página. *Estado: hecho; la redacción debe verificarse con las condiciones actuales del programa de afiliados.*
 - RF-C11. EL SISTEMA no debe mostrar características en la tarjeta ni nota bajo el botón. El popover del botón "Ver precio" se quitó; el componente reutilizable se conserva. *Estado: hecho.*
 - RF-C12. EL SISTEMA debe usar el ícono "D" de la marca como favicon, incrustado en el HTML. *Estado: hecho; confirmar en datosonline.cl después de publicar.*
-- RF-C13. EL SISTEMA debe usar códigos con formato `A-000001`, asignados en orden de publicación, y renumerar los productos existentes con ese orden. Esto reemplaza el formato `DO-…` de RF-12. *Estado: hecho en el archivo de datos local; cambiará los códigos del sitio al publicarse.*
+- RF-C13. EL SISTEMA debe usar códigos con formato `A-01`, asignados en orden de publicación, y renumerar los productos existentes con ese orden. Esto reemplaza el formato `DO-…` de RF-12. *Estado: hecho en el archivo de datos local; cambiará los códigos del sitio al publicarse.*
 
 ### Panel de administración
 

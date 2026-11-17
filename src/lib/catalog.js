@@ -5,7 +5,7 @@ import { UNAVAILABLE_SLUG } from "./products.js";
 
 const CODE_PREFIX = "A-";
 const CODE_PATTERN = /^A-(\d+)$/;
-const CODE_DIGITS = 6;
+const CODE_DIGITS = 2;
 // Photos live in img/<folder>/<file>. Anything else is never deleted.
 const IMAGE_PATH = /^img\/(?!.*\.\.)[^/]+(?:\/[^/]+)+$/;
 const CHANGE_VERBS = { add: "agrega", update: "edita", remove: "elimina" };
