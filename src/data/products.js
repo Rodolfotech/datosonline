@@ -148,7 +148,7 @@ export const products = [
   },
   {
     "code": "A-000006",
-    "title": "Deshuesador 6 Cerezas Y Aceitunas Manual Cocina",
+    "title": "Deshuesador 6 Cerezas Y Aceitunas",
     "category": "cocina",
     "features": [
       "Procesa hasta 6 frutas al mismo tiempo",
