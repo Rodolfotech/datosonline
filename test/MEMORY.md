@@ -54,6 +54,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 
 - Cookies y Ley 21.719 (vigencia 1-DIC-2026): banner de consentimiento (`src/cookies.js`, `src/components/cookie-banner.js`, lógica en `src/lib/consent.js`). Clarity y Google Tag Manager solo se cargan tras "Aceptar"; "Rechazar" y "Configurar cookies" (pie) permiten cambiar la decisión. La política (`privacidad.html`) sigue el art. 14 ter. Pendiente antes de publicar: correo de contacto (art. 11), plazo de conservación, confirmar lo que GTM carga.
 
+- Panel: se puede eliminar una categoría sin productos (RF-P9 de la spec, pedido del dueño 2026-11-17). El botón aparece bajo las pestañas solo si la categoría está vacía; el cambio es un commit que solo toca `src/data/categories.js`. Lógica en `removeCategory` (`src/lib/catalog.js`).
+
 ## Aprendizajes y errores a evitar
 - `src/data/products.js` y `categories.js` están en formato generado (JSON estricto dentro de `export const … = [ … ];`, con cabecera de comentarios). No editarlos a mano con otro formato: se escriben con `serializeDataFile` y se leen con `parseDataFile` (`src/lib/data-file.js`); un test falla si se salen del formato. La descripción de los campos está al inicio de `src/lib/products.js`.
 - No reintroducir pasos de compilación: el sitio debe funcionar servido "tal cual" desde la raíz del repositorio. `.github/workflows/deploy.yml` solo corre los tests y copia los archivos.

@@ -6,6 +6,7 @@ import {
   productsInTab,
   describeChange,
   nextProductCode,
+  removeCategory,
   removeProduct,
   removedImagePaths,
   resolveCategory,
@@ -200,6 +201,26 @@ function categoryNameOf(slug) {
 
 // The search looks in every product, including the unavailable ones, so the
 // owner can find any product. Without a search, the tabs decide the list.
+// The categories of the store, each with its product count. A category with
+// products cannot be deleted: its button is disabled and says how many products use it.
+function categoriesHtml() {
+  const { products, categories } = state.catalog;
+  const rows = categories.map((category) => {
+    const used = products.filter((product) => product.category === category.slug).length;
+    const name = escapeHtml(category.name);
+    const button = used === 0
+      ? `<button type="button" data-delete-category="${escapeHtml(category.slug)}" aria-label="Eliminar la categoría ${name}" class="button button--danger button--small">Eliminar</button>`
+      : `<button type="button" disabled aria-label="No se puede eliminar ${name}: tiene ${used} productos" class="button button--small">Eliminar</button>`;
+    const note = used === 0 ? "Vacía" : `${productCountLabel(used)}. Muévelos o elimínalos para poder borrarla.`;
+    return `<li class="category-row"><div><p class="category-row__name">${name}</p><p class="category-row__note">${note}</p></div>${button}</li>`;
+  }).join("");
+  return `
+    <details class="categories" open>
+      <summary class="categories__summary">Categorías</summary>
+      <ul class="category-list">${rows}</ul>
+    </details>`;
+}
+
 function showCatalog({ notice = "", error = "" } = {}) {
   const { products } = state.catalog;
   const searching = state.listQuery !== "";
@@ -233,6 +254,7 @@ function showCatalog({ notice = "", error = "" } = {}) {
         <input id="panel-search" type="search" value="${escapeHtml(state.listQuery)}" placeholder="Ej.: iPhone o A-000001" autocomplete="off" class="field__input" />
       </form>
       ${tabsHtml()}
+      ${searching ? "" : categoriesHtml()}
       <p class="panel__count">${countText}</p>
       <p role="status" class="panel__notice">${escapeHtml(notice)}</p>
       <p role="alert" class="panel__error">${escapeHtml(error)}</p>
@@ -795,6 +817,11 @@ async function handlePublishFailure(failure) {
 // Tabs and pages are read from the element that stays on screen, so their
 // listeners are added once, not on every redraw.
 root.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest("[data-delete-category]");
+  if (deleteButton && state.catalog) {
+    handleDeleteCategory(deleteButton.dataset.deleteCategory);
+    return;
+  }
   const tab = event.target.closest("[data-tab]");
   if (!tab || !state.catalog) return;
   state.listTab = tab.dataset.tab;
@@ -802,6 +829,57 @@ root.addEventListener("click", (event) => {
   state.listPage = 1;
   showCatalog();
 });
+
+// Deletes an empty category as one commit that changes only the categories file.
+async function handleDeleteCategory(slug) {
+  const { products, categories } = state.catalog;
+  const category = categories.find((item) => item.slug === slug);
+  if (!category) return;
+
+  const accepted = await confirmDialog({
+    title: "Eliminar categoría",
+    message: "¿Estás seguro de eliminar la categoría? Nada se podrá recuperar.",
+    detail: category.name,
+    confirmLabel: "Eliminar",
+    cancelLabel: "Cancelar",
+    tone: "danger",
+  });
+  if (!accepted) return;
+
+  saving = true;
+  try {
+    const remaining = removeCategory(categories, products, slug);
+    await state.client.publish({
+      base: state.catalog,
+      products,
+      categories: remaining,
+      newImages: [],
+      removedImages: [],
+      message: `Panel: elimina la categoría "${category.name}"`,
+    });
+    state.catalog = await state.client.loadCatalog();
+  } catch (failure) {
+    saving = false;
+    if (failure.code === "invalid-token" || failure.code === "no-access") {
+      clearToken();
+      showSignIn(failure.message);
+      return;
+    }
+    if (failure.code === "conflict") {
+      try {
+        state.catalog = await state.client.loadCatalog();
+      } catch {
+        // Keep the list on screen as it was.
+      }
+    }
+    showCatalog({ error: failure.message });
+    return;
+  }
+  saving = false;
+  state.listTab = "";
+  state.listQuery = "";
+  showCatalog({ notice: `Se eliminó la categoría "${category.name}". El cambio se verá en datosonline.cl en unos minutos.` });
+}
 
 // The search waits a moment after the last key, then shows the results.
 let searchTimer = null;

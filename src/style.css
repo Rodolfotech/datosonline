@@ -1509,3 +1509,22 @@ product-card {
     align-items: center;
   }
 }
+
+/* Enlaces legales del pie, a la derecha. */
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-left: auto;
+}
+
+/* Espacio al final de la página mientras el banner de cookies está abierto. */
+body.has-cookie-banner {
+  padding-bottom: 14rem;
+}
+
+@media (min-width: 768px) {
+  body.has-cookie-banner {
+    padding-bottom: 9rem;
+  }
+}
