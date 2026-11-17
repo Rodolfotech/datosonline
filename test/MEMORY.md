@@ -30,6 +30,12 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 
 - Panel, fotos: se agregan con el botón o arrastrándolas sobre la sección de fotos (pedido del dueño, 2026-11-16). Soltar fuera de esa zona no abre la imagen, para no perder el formulario.
 
+- Vista previa pendiente de aprobación (2026-11-16, sin commit): una tarjeta por versión (`getCards`), título con versión ("Producto • 256 GB"), botón "Ver precio en Mercado Libre" con popover, sin características, sin selector de versiones ni nota bajo el botón, y enlace directo por tarjeta (`datosonline.cl/#<cardId>`, p. ej. `#iphone-17-pro-max-256-gb`). Pendiente: buscador, tamaño de letra y decisión sobre el contador ("6 productos" cuenta tarjetas).
+
+- Panel: no se pueden agregar ni editar características (pedido del dueño, 2026-11-16). Las que ya tienen los productos se guardan tal como están; no se muestran en la tarjeta.
+
+- Panel: no se pueden agregar versiones nuevas (pedido del dueño, 2026-11-16). Cada producto se publica con un enlace; los productos que ya tienen varias versiones las conservan y pueden quitarse una.
+
 ## Aprendizajes y errores a evitar
 - `src/data/products.js` y `categories.js` están en formato generado (JSON estricto dentro de `export const … = [ … ];`, con cabecera de comentarios). No editarlos a mano con otro formato: se escriben con `serializeDataFile` y se leen con `parseDataFile` (`src/lib/data-file.js`); un test falla si se salen del formato. La descripción de los campos está al inicio de `src/lib/products.js`.
 - No reintroducir pasos de compilación: el sitio debe funcionar servido "tal cual" desde la raíz del repositorio. `.github/workflows/deploy.yml` solo corre los tests y copia los archivos.

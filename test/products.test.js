@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { UNAVAILABLE_SLUG, getVisibleProducts, isValidProduct, normalizeProduct, productCountLabel } from "../src/lib/products.js";
+import { UNAVAILABLE_SLUG, cardId, getCards, getVisibleProducts, isValidProduct, normalizeProduct, productCountLabel } from "../src/lib/products.js";
 
 const base = { code: "DO-001", title: "Phone", category: "tecnologia", url: "https://example.com/p" };
 
@@ -104,4 +104,30 @@ test("an unavailable product keeps its original category and data", () => {
   assert.equal(product.category, "tecnologia");
   assert.deepEqual(product.features, ["a"]);
   assert.deepEqual(product.variants, [{ label: "", url: "https://example.com/p" }]);
+});
+
+test("cardId is the title and version in lowercase, without accents or symbols", () => {
+  assert.equal(cardId("iPhone 17 Pro Max", "512 GB"), "iphone-17-pro-max-512-gb");
+  assert.equal(cardId("Colchón Emma Hybrid Premium 2 Plazas", ""), "colchon-emma-hybrid-premium-2-plazas");
+  assert.equal(cardId("¿Qué? 55\" TV", "65\""), "que-55-tv-65");
+});
+
+test("getCards makes one card per version, with its own link", () => {
+  const list = [
+    { ...base, code: "DO-001", title: "iPhone", variants: [
+      { label: "512 GB", url: "https://meli.la/a" },
+      { label: "256 GB", url: "https://meli.la/b" },
+    ] },
+    { ...base, code: "DO-002", title: "Colchón", category: "colchones" },
+  ];
+  const cards = getCards(list);
+  assert.deepEqual(cards.map((card) => card.cardId), ["iphone-512-gb", "iphone-256-gb", "colchon"]);
+  assert.deepEqual(cards[1].variants, [{ label: "256 GB", url: "https://meli.la/b" }]);
+  assert.equal(cards[2].variants[0].url, "https://example.com/p");
+});
+
+test("getCards keeps the same filters as getVisibleProducts", () => {
+  const list = [base, { ...base, code: "DO-002", available: false }];
+  assert.deepEqual(getCards(list).map((card) => card.code), ["DO-001"]);
+  assert.deepEqual(getCards(list, UNAVAILABLE_SLUG).map((card) => card.code), ["DO-002"]);
 });

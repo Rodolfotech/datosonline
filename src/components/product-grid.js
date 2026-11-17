@@ -2,7 +2,7 @@ import "./product-card.js";
 import { categories } from "../data/categories.js";
 import { products } from "../data/products.js";
 import { escapeHtml, getSiteCategories } from "../lib/categories.js";
-import { getVisibleProducts, productCountLabel } from "../lib/products.js";
+import { getCards, productCountLabel } from "../lib/products.js";
 
 // <product-grid category="smartphones"></product-grid>
 // Without `category` it shows every product.
@@ -20,7 +20,7 @@ class ProductGrid extends HTMLElement {
   render() {
     const categorySlug = this.getAttribute("category") ?? "";
     const category = getSiteCategories(categories, products).find((item) => item.slug === categorySlug);
-    const visibleProducts = getVisibleProducts(products, category ? categorySlug : "");
+    const visibleProducts = getCards(products, category ? categorySlug : "");
     const heading = category ? category.name : "Todos los productos";
 
     this.innerHTML = `
@@ -42,6 +42,15 @@ class ProductGrid extends HTMLElement {
       item.append(card);
       list.append(item);
     }
+    this.scrollToLinkedCard();
+  }
+
+  // A link such as datosonline.cl/#iphone-17-pro-max-512-gb opens the page at
+  // that product's card.
+  scrollToLinkedCard() {
+    const cardId = decodeURIComponent(window.location.hash.slice(1));
+    if (!cardId) return;
+    document.getElementById(cardId)?.scrollIntoView({ block: "center" });
   }
 }
 

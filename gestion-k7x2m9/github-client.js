@@ -105,7 +105,7 @@ export function createGithubClient({ fetch, token, repository = REPOSITORY, bran
     try {
       return { sha: file.sha, value: parseDataFile(decodeBase64(file.content)) };
     } catch {
-      throw formatError("fue editado a mano y ya no tiene el formato que el panel entiende.");
+      throw formatError("no tiene el formato que el panel puede leer. Si acabas de publicar cambios del panel, espera a que se fusionen en main y vuelve a intentar. Si editaste el archivo a mano, restablece el formato que deja el panel.");
     }
   }
 
