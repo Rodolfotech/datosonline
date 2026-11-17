@@ -1343,3 +1343,169 @@ product-card {
   font-size: 0.875rem;
   line-height: 1.5;
 }
+
+/* ---------- Guías de compra ---------- */
+.article {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-block: 2rem 3rem;
+}
+
+.article__back {
+  font-weight: 700;
+}
+
+.article__back a {
+  text-decoration: underline;
+}
+
+.article__title {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+}
+
+.article__lead {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.article h2 {
+  margin-top: 2rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.article p {
+  margin-top: 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.article__products {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.guide-list {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  list-style: none;
+}
+
+.guide-list__link {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  text-decoration: underline;
+}
+
+.guide-list__item p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.article__byline {
+  margin-top: 0.75rem;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.guide-list__date {
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+/* ---------- Banner de cookies ---------- */
+.cookie-banner {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  padding: 1rem 0;
+  border-top: 3px solid var(--accent);
+  background-color: var(--navy);
+  color: var(--paper);
+  box-shadow: 0 -4px 16px rgb(6 11 26 / 0.35);
+}
+
+.cookie-banner__inner {
+  display: grid;
+  gap: 1rem;
+}
+
+.cookie-banner__text {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.cookie-banner__text strong {
+  color: var(--paper);
+}
+
+.cookie-banner__link {
+  color: var(--ground-2);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cookie-banner__button {
+  min-height: 3rem;
+  flex: 1 1 9rem;
+  padding-inline: 1rem;
+  border: 2px solid var(--paper);
+  border-radius: 0.75rem;
+  background-color: transparent;
+  color: var(--paper);
+  font-weight: 800;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.cookie-banner__button:hover {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+.cookie-banner__button--primary {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--ink);
+}
+
+.cookie-banner__button--primary:hover {
+  border-color: var(--accent-2);
+  background-color: var(--accent-2);
+  color: var(--ink);
+}
+
+.cookie-banner__button:focus-visible {
+  outline-color: var(--ground-2);
+}
+
+.footer__button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .cookie-banner__inner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

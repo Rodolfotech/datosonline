@@ -88,6 +88,7 @@ class SiteNavbar extends HTMLElement {
               <ul class="navbar__list">
                 ${desktopCategories.map((category) => categoryLink(category, activeSlug)).join("")}
                 ${moreMenu}
+                <li><a href="./guias/" class="pill">Guías</a></li>
               </ul>
             </nav>
             <button type="button" data-menu-toggle aria-expanded="false" aria-controls="navbar-mobile-menu" aria-label="Menú de categorías" class="icon-button navbar__menu-toggle">${MENU_ICON}</button>
@@ -96,6 +97,7 @@ class SiteNavbar extends HTMLElement {
         <nav id="navbar-mobile-menu" hidden aria-label="Categorías" class="navbar__mobile">
           <ul class="navbar__mobile-list">
             ${allCategories.map((category) => categoryLink(category, activeSlug)).join("")}
+            <li><a href="./guias/" class="pill">Guías</a></li>
           </ul>
         </nav>
       </header>`;

@@ -69,7 +69,7 @@ export const products = [
       "Certificación IP68 contra agua y polvo"
     ],
     "badge": {
-      "label": "Tienda oficial Xianomi",
+      "label": "TIENDA OFICIAL XIAOMI",
       "tone": "hot"
     },
     "images": [

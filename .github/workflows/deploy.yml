@@ -28,9 +28,9 @@ jobs:
       - name: Collect the site files
         run: |
           mkdir -p _site/src
-          cp -r index.html img _site/
+          cp -r index.html privacidad.html img sitemap.xml robots.txt _site/
           cp -r src/style.css src/main.js src/components src/data src/lib src/fonts _site/src/
-          cp -r gestion-k7x2m9 _site/
+          cp -r gestion-k7x2m9 guias _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

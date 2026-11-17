@@ -45,7 +45,7 @@ class SiteFooter extends HTMLElement {
             </section>
           </div>
           <div class="footer__bottom">
-            <p>© ${year} ${escapeHtml(site.domain)}</p>
+            <p>© ${year} ${escapeHtml(site.domain)} · <a href="./privacidad.html" class="footer__link">Privacidad</a> · <button type="button" data-cookie-settings class="footer__link footer__button">Configurar cookies</button></p>
           </div>
         </div>
       </footer>`;
