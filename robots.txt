@@ -1,0 +1,5 @@
+# El sitio es público; el panel de administración lleva su propia marca noindex.
+User-agent: *
+Allow: /
+
+Sitemap: https://datosonline.cl/sitemap.xml

@@ -46,6 +46,14 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 
 - Panel: buscador por código o nombre sobre todos los productos (también los no disponibles), con paginador. El código aparece en cada fila y en el formulario de edición (RF-P6 y RF-P8 de la spec).
 
+- SEO (2026-11-17): título y descripción de la portada, etiquetas Open Graph y canonical en `index.html`; título por categoría en `src/main.js` ("Smartphones | DatosOnline Chile"); lista de productos como JSON-LD `ItemList` (`src/lib/structured-data.js`), sin precios ni disponibilidad. Pendiente: verificar en Search Console lo que ve Google, mapa del sitio y `robots.txt`, guías.
+
+- Guías (2026-11-17, decisión del dueño): pestaña "Guías" en el menú, con página de índice en `/guias/` y un artículo por producto o comparativa. Los artículos los escribe el dueño; no se publican afirmaciones sin respaldo (ficha oficial o prueba propia). Spec en `specs/contenido/contenido-comparativas.md`, en preguntas (1 de 5 respondida: el dueño escribe los textos).
+
+- Guías creadas (2026-11-17): `guias/index.html` y 9 páginas (`guias/*.html`) con los textos suavizados (sin cifras técnicas no confirmadas). Las tarjetas se colocan con `guias/guia.js` usando `data-guide-cards` (identificadores de tarjeta). El menú tiene el enlace "Guías". El despliegue copia `guias/`. Prueba: `test/guides.test.js`. Pendiente: spec de contenido completa; mapa del sitio.
+
+- Cookies y Ley 21.719 (vigencia 1-DIC-2026): banner de consentimiento (`src/cookies.js`, `src/components/cookie-banner.js`, lógica en `src/lib/consent.js`). Clarity y Google Tag Manager solo se cargan tras "Aceptar"; "Rechazar" y "Configurar cookies" (pie) permiten cambiar la decisión. La política (`privacidad.html`) sigue el art. 14 ter. Pendiente antes de publicar: correo de contacto (art. 11), plazo de conservación, confirmar lo que GTM carga.
+
 ## Aprendizajes y errores a evitar
 - `src/data/products.js` y `categories.js` están en formato generado (JSON estricto dentro de `export const … = [ … ];`, con cabecera de comentarios). No editarlos a mano con otro formato: se escriben con `serializeDataFile` y se leen con `parseDataFile` (`src/lib/data-file.js`); un test falla si se salen del formato. La descripción de los campos está al inicio de `src/lib/products.js`.
 - No reintroducir pasos de compilación: el sitio debe funcionar servido "tal cual" desde la raíz del repositorio. `.github/workflows/deploy.yml` solo corre los tests y copia los archivos.
