@@ -183,29 +183,6 @@ export const products = [
     ]
   },
   {
-    "code": "A-06",
-    "title": "Deshuesador 6 Cerezas Y Aceitunas",
-    "category": "cocina",
-    "features": [
-      "Procesa hasta 6 frutas al mismo tiempo",
-      "Cuerpo y mango de plástico ABS liviano con puntas y piezas internas de acero inoxidable.",
-      "Medidas aproximadas: 19,5 x 11 x 6 cm",
-      "Lavar y secar completamente después de cada uso antes de guarda",
-      "Se vende por unidad e incluye 1 deshuesador múltiple"
-    ],
-    "badge": {
-      "label": "RECOMENDADO",
-      "tone": "hot"
-    },
-    "images": [
-      "img/do-009/1-0m1d4g.webp",
-      "img/do-009/2-0e0c71.webp",
-      "img/do-009/3-0o3b4y.webp",
-      "img/do-009/4-2j6e45.webp"
-    ],
-    "url": "https://meli.la/1YHMQxU"
-  },
-  {
     "code": "A-05",
     "title": "Samsung Galaxy A57 5G",
     "category": "smartphones",
