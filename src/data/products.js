@@ -189,6 +189,10 @@ export const products = [
       "Lavar y secar completamente después de cada uso antes de guarda",
       "Se vende por unidad e incluye 1 deshuesador múltiple"
     ],
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/do-009/1-0m1d4g.webp",
       "img/do-009/2-0e0c71.webp",
