@@ -299,6 +299,10 @@ export const products = [
       "Fuente certificada 80 Plus y Windows 11 Pro original",
       "Espacio para sumar una tarjeta gráfica dedicada"
     ],
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/do-005/pack.webp",
       "img/do-005/torre-kit.webp",
