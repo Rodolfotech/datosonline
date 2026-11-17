@@ -7,7 +7,7 @@ export const categories = [
   },
   {
     "slug": "colchones",
-    "name": "Colchones"
+    "name": "Hogar"
   },
   {
     "slug": "pc-gamer",
