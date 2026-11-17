@@ -28,15 +28,15 @@ const frozen = (value) => {
 };
 
 test("nextProductCode continues after the highest existing code", () => {
-  assert.equal(nextProductCode(products), "A-000001");
-  assert.equal(nextProductCode([]), "A-000001");
-  assert.equal(nextProductCode([{ code: "A-000099" }]), "A-000100");
-  assert.equal(nextProductCode([{ code: "A-999999" }]), "A-1000000");
-  assert.equal(nextProductCode([{ code: "A-000011" }, { code: "A-000003" }]), "A-000012");
+  assert.equal(nextProductCode(products), "A-01");
+  assert.equal(nextProductCode([]), "A-01");
+  assert.equal(nextProductCode([{ code: "A-09" }]), "A-10");
+  assert.equal(nextProductCode([{ code: "A-99" }]), "A-100");
+  assert.equal(nextProductCode([{ code: "A-11" }, { code: "A-03" }]), "A-12");
 });
 
 test("nextProductCode ignores codes with another shape", () => {
-  assert.equal(nextProductCode([{ code: "X-500" }, { code: "DO-002" }, { code: undefined }, { code: "A-abc" }]), "A-000001");
+  assert.equal(nextProductCode([{ code: "X-500" }, { code: "DO-002" }, { code: undefined }, { code: "A-abc" }]), "A-01");
 });
 
 test("slugify removes accents, capitals and symbols", () => {
