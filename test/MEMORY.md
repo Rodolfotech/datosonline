@@ -36,6 +36,16 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas.
 
 - Panel: no se pueden agregar versiones nuevas (pedido del dueño, 2026-11-16). Cada producto se publica con un enlace; los productos que ya tienen varias versiones las conservan y pueden quitarse una.
 
+- Paginador reutilizable: `<site-pager pages current>` (`src/components/pager.js`) con la lógica en `src/lib/pagination.js`. Emite `pagechange`. La lista de productos usa 12 por página y guarda la página en `?pagina=N`. Se oculta si hay una sola página.
+
+- Aviso de afiliado (regla de Mercado Libre: 24 horas para comprar desde el enlace): va en un ícono de información junto a la categoría de cada tarjeta disponible (popover al pasar el mouse, enfocar o tocar), y en el pie. El popover de "Ver precio" conserva el texto de redirección. Verificar la redacción con las condiciones actuales del programa.
+
+- Códigos de producto (2026-11-16): formato `A-000001`. Los 11 productos se renumeraron en orden de publicación (el iPhone 17 Pro Max es `A-000001`). Los códigos anteriores `DO-…` nunca se publicaron. Las fotos no cambian: cada producto guarda las rutas de sus fotos.
+
+- Buscador: campo arriba del listado; busca por código (`A-000001`, `a1`, `A 1`) o por nombre, versión, categoría y subcategoría, en todas las categorías y solo productos disponibles. Se guarda en la dirección (`?buscar=…`) para usarla en la biografía de Instagram. El ícono de lupa del menú se quitó (pedido del dueño): el campo queda arriba del listado. Lógica en `src/lib/search.js`.
+
+- Panel: buscador por código o nombre sobre todos los productos (también los no disponibles), con paginador. El código aparece en cada fila y en el formulario de edición (RF-P6 y RF-P8 de la spec).
+
 ## Aprendizajes y errores a evitar
 - `src/data/products.js` y `categories.js` están en formato generado (JSON estricto dentro de `export const … = [ … ];`, con cabecera de comentarios). No editarlos a mano con otro formato: se escriben con `serializeDataFile` y se leen con `parseDataFile` (`src/lib/data-file.js`); un test falla si se salen del formato. La descripción de los campos está al inicio de `src/lib/products.js`.
 - No reintroducir pasos de compilación: el sitio debe funcionar servido "tal cual" desde la raíz del repositorio. `.github/workflows/deploy.yml` solo corre los tests y copia los archivos.
