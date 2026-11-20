@@ -115,7 +115,7 @@ export const products = [
   },
   {
     "code": "A-11",
-    "title": "Moto G06",
+    "title": "Moto G06 Verde",
     "category": "smartphones",
     "features": [
       "Pantalla IPS de 6,9\" con tasa de refresco de 120 Hz",
