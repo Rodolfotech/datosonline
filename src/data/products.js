@@ -2,6 +2,16 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-18",
+    "title": "BRAVERY CHICKEN GATO ADULTO 7 KG",
+    "category": "mascotas",
+    "images": [
+      "img/a-18/1-0v2146.webp",
+      "img/a-18/2-6k3n2p.webp"
+    ],
+    "url": "https://meli.la/2Uf7KE2"
+  },
+  {
     "code": "A-17",
     "title": "Bravery Gato Esterilizado 7 Kg - Salmón",
     "category": "mascotas",
