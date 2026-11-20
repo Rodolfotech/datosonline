@@ -2,6 +2,17 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-16",
+    "title": "Leonardo Pack 6 Latas Ternera",
+    "category": "mascotas",
+    "images": [
+      "img/a-16/1-5y2f2v.webp",
+      "img/a-16/2-33432t.webp",
+      "img/a-16/3-03450z.webp"
+    ],
+    "url": "https://meli.la/2ppiioJ"
+  },
+  {
     "code": "A-15",
     "title": "Monitor Gamer Msi Mag 255f E20 25 Pulgadas Full Hd 200hz",
     "category": "pc-gamer",

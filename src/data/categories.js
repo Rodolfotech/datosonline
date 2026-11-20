@@ -16,5 +16,9 @@ export const categories = [
   {
     "slug": "zapatillas",
     "name": "Zapatillas"
+  },
+  {
+    "slug": "mascotas",
+    "name": "Mascotas"
   }
 ];
