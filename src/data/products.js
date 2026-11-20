@@ -49,6 +49,10 @@ export const products = [
     "code": "A-14",
     "title": "Monitor Gamer Curvo Kolke 27 Full Hd",
     "category": "pc-gamer",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/a-14/1-4v665w.webp",
       "img/a-14/2-1x1i5y.webp",
