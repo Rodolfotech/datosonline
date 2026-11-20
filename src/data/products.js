@@ -37,6 +37,10 @@ export const products = [
     "code": "A-15",
     "title": "Monitor Gamer Msi Mag 255f E20 25 Pulgadas Full Hd 200hz",
     "category": "pc-gamer",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/a-15/1-6o0p1u.webp",
       "img/a-15/2-392063.webp",
