@@ -30,6 +30,10 @@ export const products = [
     "code": "A-16",
     "title": "Leonardo Pack 6 Latas Ternera",
     "category": "mascotas",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/a-16/1-5y2f2v.webp",
       "img/a-16/2-33432t.webp",
