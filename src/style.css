@@ -303,11 +303,40 @@ site-navbar {
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
+/* En celular, las categorías salen desde la izquierda como un panel bajo la barra.
+   La barra con la hamburguesa queda visible para cerrarlo. */
 .navbar__mobile {
-  max-height: 70vh;
-  padding: 0.75rem var(--page-gutter);
+  position: fixed;
+  top: 4.25rem;
+  bottom: 0;
+  left: 0;
+  z-index: 60;
+  width: min(20rem, 85vw);
+  padding: 1rem var(--page-gutter);
   overflow-y: auto;
-  border-top: 1px solid var(--navy);
+  border-right: 1px solid var(--navy);
+  background-color: var(--ink);
+  box-shadow: 4px 0 16px rgb(6 11 26 / 0.35);
+  animation: navbar-slide-in-left 0.25s ease-out;
+}
+
+.navbar__mobile[hidden] {
+  display: none;
+}
+
+@keyframes navbar-slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__mobile {
+    animation: none;
+  }
 }
 
 .navbar__mobile-list {
@@ -531,10 +560,33 @@ product-grid {
   text-decoration: underline;
 }
 
+/* Dos tarjetas por fila también en celular; desde 640 px la lista sigue creciendo. */
 .products__list {
   display: grid;
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
   margin-top: 1.5rem;
+}
+
+/* En celular la tarjeta es angosta: se reducen márgenes y letras, sin pasar de 14 px. */
+.card__body {
+  padding: 0.75rem;
+}
+
+.card__title {
+  font-size: 1rem;
+  line-height: 1.375;
+}
+
+.card__price {
+  min-width: 0;
+  padding-inline: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.card__share {
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 @media (min-width: 640px) {
