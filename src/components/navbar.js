@@ -2,6 +2,10 @@ import { categories } from "../data/categories.js";
 import { products } from "../data/products.js";
 import { categoryUrl, escapeHtml, getSiteCategories, splitCategories } from "../lib/categories.js";
 import { logoHtml } from "./logo.js";
+import { themeButtonLabel } from "../lib/theme.js";
+
+// Sun icon of the theme button.
+const SUN_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>`;
 
 // Categories shown directly in the desktop bar; the rest go under "Más".
 const MAX_VISIBLE_CATEGORIES = 4;
@@ -91,6 +95,7 @@ class SiteNavbar extends HTMLElement {
                 <li><a href="./guias/" class="pill">Guías</a></li>
               </ul>
             </nav>
+            <button type="button" data-theme-toggle aria-label="${themeButtonLabel(document.documentElement.dataset.theme)}" title="${themeButtonLabel(document.documentElement.dataset.theme)}" class="icon-button">${SUN_ICON}</button>
             <button type="button" data-menu-toggle aria-expanded="false" aria-controls="navbar-mobile-menu" aria-label="Menú de categorías" class="icon-button navbar__menu-toggle">${MENU_ICON}</button>
           </div>
         </div>
