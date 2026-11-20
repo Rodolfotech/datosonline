@@ -2,6 +2,30 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-19",
+    "title": "Xiaomi Redmi Note 17 Pro Max Negro 8 RAM",
+    "category": "smartphones",
+    "badge": {
+      "label": "TIENDA OFICIAL Xiaomi",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-19/1-130d63.webp",
+      "img/a-19/2-286t4v.webp",
+      "img/a-19/3-33010w.webp",
+      "img/a-19/4-0i1y53.webp",
+      "img/a-19/5-3i4k6j.webp",
+      "img/a-19/6-3j3v0i.webp",
+      "img/a-19/7-474p3q.webp"
+    ],
+    "variants": [
+      {
+        "label": "256 GB",
+        "url": "https://meli.la/1jrtLD3"
+      }
+    ]
+  },
+  {
     "code": "A-18",
     "title": "BRAVERY CHICKEN GATO ADULTO 7 KG",
     "category": "mascotas",
