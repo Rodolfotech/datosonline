@@ -2,6 +2,17 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-17",
+    "title": "Bravery Gato Esterilizado 7 Kg - Salmón",
+    "category": "mascotas",
+    "images": [
+      "img/a-17/1-725w1y.webp",
+      "img/a-17/2-640k42.webp",
+      "img/a-17/3-3a0t3z.webp"
+    ],
+    "url": "https://meli.la/2WPx3xK"
+  },
+  {
     "code": "A-16",
     "title": "Leonardo Pack 6 Latas Ternera",
     "category": "mascotas",
