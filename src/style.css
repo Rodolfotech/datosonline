@@ -215,35 +215,38 @@ info-popover:not([dismissed]):focus-within .popover__bubble {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 0.625rem;
   border-radius: 0.5rem;
-  font-family: var(--font-display);
-  line-height: 1.75rem;
 }
 
 .logo:focus-visible {
   outline-offset: 4px;
 }
 
-.logo__mark {
-  display: grid;
-  width: 2.25rem;
-  height: 2.25rem;
-  place-items: center;
-  border: 2px solid var(--paper);
-  border-radius: 0.5rem;
-  background-color: var(--ground);
-  color: var(--ink);
-  font-size: 1.125rem;
+/* Un solo logotipo visible a la vez: el claro sobre fondo claro, el oscuro
+   sobre fondo oscuro (modo oscuro y pie de página). */
+.logo__img {
+  height: 2.75rem;
+  width: auto;
 }
 
-.logo__name {
-  color: var(--paper);
-  font-size: 1.25rem;
+.logo__img--dark {
+  display: none;
 }
 
-.logo__name span {
-  color: var(--ground);
+html[data-theme="dark"] .logo__img--light {
+  display: none;
+}
+
+html[data-theme="dark"] .logo__img--dark {
+  display: block;
+}
+
+.footer .logo__img--light {
+  display: none;
+}
+
+.footer .logo__img--dark {
+  display: block;
 }
 
 /* ---------- Navbar ---------- */
@@ -254,10 +257,25 @@ site-navbar {
   display: block;
 }
 
+/* La barra sigue al tema: clara en modo claro, oscura en modo oscuro. */
 .navbar {
   border-bottom: 3px solid var(--accent);
-  background-color: var(--ink);
-  color: var(--paper);
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+.navbar .pill {
+  color: var(--ink);
+}
+
+.navbar .icon-button {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.navbar .icon-button:hover {
+  background-color: var(--gray-1);
+  color: var(--ink);
 }
 
 .navbar__bar {
@@ -314,8 +332,8 @@ site-navbar {
   width: min(20rem, 85vw);
   padding: 1rem var(--page-gutter);
   overflow-y: auto;
-  border-right: 1px solid var(--navy);
-  background-color: var(--ink);
+  border-right: 1px solid var(--gray-2);
+  background-color: var(--paper);
   box-shadow: 4px 0 16px rgb(6 11 26 / 0.35);
   animation: navbar-slide-in-left 0.25s ease-out;
 }
@@ -1579,4 +1597,129 @@ body.has-cookie-banner {
   body.has-cookie-banner {
     padding-bottom: 9rem;
   }
+}
+
+/* En celular, el aviso del ícono ocupa el ancho de la tarjeta, debajo de la
+   categoría, para que no se corte por los bordes. */
+@media (max-width: 639px) {
+  .card__meta-row {
+    position: relative;
+  }
+
+  .card__meta-row info-popover {
+    position: static;
+  }
+
+  .card__meta-row .popover__bubble {
+    top: calc(100% + 0.5rem);
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    max-width: none;
+  }
+
+  .card__meta-row .popover__bubble::after {
+    display: none;
+  }
+}
+
+/* ---------- Modo oscuro (html[data-theme="dark"]) ----------
+   Se invierten los colores de fondo y de texto. Donde un texto va sobre
+   naranja, amarillo, verde o gris claro, se fija oscuro para que se lea. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --gray-1: #0b1220;
+  --gray-2: #2b3650;
+  --paper: #131c31;
+  --ink: #eef2fb;
+  --ink-soft: rgb(238 242 251 / 0.75);
+}
+
+html[data-theme="dark"] .navbar {
+  background-color: #060b1a;
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .navbar__mobile {
+  background-color: #060b1a;
+}
+
+html[data-theme="dark"] .navbar .pill {
+  color: #c9d1e3;
+}
+
+html[data-theme="dark"] .navbar .pill:hover {
+  background-color: #0b1736;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .navbar .icon-button {
+  color: #eef2fb;
+  border-color: rgb(238 242 251 / 0.7);
+}
+
+html[data-theme="dark"] .navbar .icon-button:hover {
+  background-color: #0b1736;
+  color: #ffffff;
+}
+
+/* El pie es oscuro en ambos modos: se fija el fondo y el texto. */
+html[data-theme="dark"] .footer {
+  background-color: #060b1a;
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .footer__social-text {
+  color: #c9d1e3;
+}
+
+html[data-theme="dark"] .footer__title,
+html[data-theme="dark"] .footer__panel-title,
+html[data-theme="dark"] .footer__social-link,
+html[data-theme="dark"] .footer__panel .footer__disclosure,
+html[data-theme="dark"] .footer__panel .footer__disclosure strong {
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .cookie-banner {
+  background-color: #060b1a;
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .cookie-banner__button {
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .cookie-banner__button:hover {
+  background-color: #eef2fb;
+  color: #060b1a;
+}
+
+html[data-theme="dark"] .cookie-banner__button--primary,
+html[data-theme="dark"] .cookie-banner__button--primary:hover {
+  color: #060b1a;
+}
+
+/* Textos sobre fondos de color: siempre oscuros. */
+html[data-theme="dark"] .card__price,
+html[data-theme="dark"] .search__button,
+html[data-theme="dark"] .badge--top,
+html[data-theme="dark"] .badge--hot,
+html[data-theme="dark"] .badge--new,
+html[data-theme="dark"] .badge--silver,
+html[data-theme="dark"] .ribbon {
+  color: #060b1a;
+}
+
+html[data-theme="dark"] .card__price:disabled {
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .card__share:disabled {
+  color: #eef2fb;
+}
+
+html[data-theme="dark"] .cookie-banner__text strong {
+  color: #eef2fb;
 }
