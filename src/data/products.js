@@ -2,6 +2,18 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-14",
+    "title": "Monitor Gamer Curvo Kolke 27 Full Hd",
+    "category": "pc-gamer",
+    "images": [
+      "img/a-14/1-4v665w.webp",
+      "img/a-14/2-1x1i5y.webp",
+      "img/a-14/3-6o5q1e.webp",
+      "img/a-14/4-5q3e0d.webp"
+    ],
+    "url": "https://meli.la/2HqSchB"
+  },
+  {
     "code": "A-13",
     "title": "Zapatilla Mujer",
     "category": "zapatillas",
