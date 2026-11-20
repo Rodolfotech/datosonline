@@ -5,6 +5,10 @@ export const products = [
     "code": "A-18",
     "title": "BRAVERY CHICKEN GATO ADULTO 7 KG",
     "category": "mascotas",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/a-18/1-0v2146.webp",
       "img/a-18/2-6k3n2p.webp"
