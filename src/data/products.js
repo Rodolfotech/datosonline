@@ -19,6 +19,10 @@ export const products = [
     "code": "A-17",
     "title": "Bravery Gato Esterilizado 7 Kg - Salmón",
     "category": "mascotas",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
     "images": [
       "img/a-17/1-725w1y.webp",
       "img/a-17/2-640k42.webp",
