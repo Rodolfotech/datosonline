@@ -11,7 +11,7 @@ export const categories = [
   },
   {
     "slug": "pc-gamer",
-    "name": "PC Gamer"
+    "name": "Computación"
   },
   {
     "slug": "zapatillas",
