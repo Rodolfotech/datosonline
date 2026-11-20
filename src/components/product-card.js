@@ -5,7 +5,7 @@ import { escapeHtml } from "../lib/categories.js";
 const SHARE_FEEDBACK_MS = 2500;
 const AFFILIATE_NOTICE_TEXT = "Te llevamos a Mercado Libre. Si compras dentro de las 24 horas desde que entras por este enlace, DatosOnline recibe una comisión sin costo extra para ti.";
 const INFO_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"><circle cx="12" cy="12" r="9.25"/><path d="M12 11v5.5M12 7.5h.01"/></svg>`;
-const PRICE_LABEL = "Ver precio en Mercado Libre";
+const PRICE_LABEL = "Ir a Mercado Libre";
 
 const EXTERNAL_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon icon--small" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
 const SHARE_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.7M8.2 13.2l7.6 3.7"/></svg>`;

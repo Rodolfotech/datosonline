@@ -1020,7 +1020,7 @@ product-card {
   padding-top: 1.25rem;
 }
 
-/* El popover envuelve al botón "Ver precio" y ocupa el ancho disponible. */
+/* El popover envuelve al botón "Ir a Mercado Libre" y ocupa el ancho disponible. */
 .card__actions info-popover {
   flex: 1;
 }
@@ -1732,4 +1732,28 @@ html[data-theme="dark"] .card__share:disabled {
 
 html[data-theme="dark"] .cookie-banner__text strong {
   color: #eef2fb;
+}
+
+/* En celular, "Ir a Mercado Libre" ocupa casi todo el ancho y "compartir" es más pequeño. */
+@media (max-width: 639px) {
+  .card__actions {
+    gap: 0.375rem;
+  }
+
+  .card__price {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-inline: 0.375rem;
+  }
+
+  .card__share {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 2.25rem;
+  }
+
+  .card__share .icon {
+    width: 1rem;
+    height: 1rem;
+  }
 }
