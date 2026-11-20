@@ -2,6 +2,18 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-15",
+    "title": "Monitor Gamer Msi Mag 255f E20 25 Pulgadas Full Hd 200hz",
+    "category": "pc-gamer",
+    "images": [
+      "img/a-15/1-6o0p1u.webp",
+      "img/a-15/2-392063.webp",
+      "img/a-15/3-4o5c5p.webp",
+      "img/a-15/4-4p0l65.webp"
+    ],
+    "url": "https://meli.la/1cupjY1"
+  },
+  {
     "code": "A-14",
     "title": "Monitor Gamer Curvo Kolke 27 Full Hd",
     "category": "pc-gamer",
