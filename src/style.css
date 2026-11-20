@@ -315,10 +315,20 @@ site-navbar {
   margin-top: 0.75rem;
   padding: 0.5rem;
   overflow-y: auto;
-  border: 1px solid var(--navy);
+  border: 1px solid var(--gray-2);
   border-radius: 1rem;
-  background-color: var(--ink);
+  background-color: var(--paper);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Las categorías del menú "Más" se leen como texto oscuro sobre fondo claro. */
+.navbar__more-menu .pill {
+  color: var(--ink);
+}
+
+.navbar__more-menu .pill[aria-current="page"] {
+  background-color: var(--accent);
+  color: var(--ink);
 }
 
 /* En celular, las categorías salen desde la izquierda como un panel bajo la barra.
