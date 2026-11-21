@@ -2,6 +2,19 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-20",
+    "title": "Cortina Roller Duo Zebra Día Y Noche 220 X 200 Cm Gris Guiza",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMEDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-20/1-3f1p5e.webp"
+    ],
+    "url": "https://meli.la/1qe7NXN"
+  },
+  {
     "code": "A-19",
     "title": "Xiaomi Redmi Note 17 Pro Max Negro 8 RAM",
     "category": "smartphones",
