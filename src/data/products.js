@@ -2,6 +2,20 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-21",
+    "title": "Sabanas Cannon 2 Plazas 144 Hilos Full Diseño de la tela Malibú",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-21/1-452l3f.webp",
+      "img/a-21/2-3t1i04.webp"
+    ],
+    "url": "https://meli.la/2uCg6PG"
+  },
+  {
     "code": "A-20",
     "title": "Cortina Roller Duo Zebra Día Y Noche 220 X 200 Cm Gris Guiza",
     "category": "colchones",
