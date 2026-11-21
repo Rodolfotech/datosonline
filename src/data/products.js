@@ -2,6 +2,26 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-23",
+    "title": "Homer Design Escritorio Multifuncional 140cm Color Blanco",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-23/1-5e0d5e.webp",
+      "img/a-23/2-252i22.webp",
+      "img/a-23/3-4l394u.webp",
+      "img/a-23/4-3d2l10.webp",
+      "img/a-23/5-5o4g4p.webp",
+      "img/a-23/6-480o1e.webp",
+      "img/a-23/7-4t0a34.webp",
+      "img/a-23/8-33000k.webp"
+    ],
+    "url": "https://meli.la/1fW1CwJ"
+  },
+  {
     "code": "A-22",
     "title": "Toldo 3x3 M",
     "category": "colchones",
