@@ -2,6 +2,20 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-27",
+    "title": "Escritorio Gamer Con Luces 120x60x73cm",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-27/1-4j0y26.webp",
+      "img/a-27/2-485y38.webp"
+    ],
+    "url": "https://meli.la/2KKyZKx"
+  },
+  {
     "code": "A-26",
     "title": "Batería de Cocina Le Forge Antiadherente de Cerámica, Set de 8 Piezas",
     "category": "colchones",
