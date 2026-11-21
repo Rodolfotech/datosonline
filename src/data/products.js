@@ -2,6 +2,20 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-26",
+    "title": "Batería de Cocina Le Forge Antiadherente de Cerámica, Set de 8 Piezas",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-26/1-6p3s5w.webp",
+      "img/a-26/2-6x621h.webp"
+    ],
+    "url": "https://meli.la/1zU7RR1"
+  },
+  {
     "code": "A-25",
     "title": "Olla A Presión Fantuzzi 10 Litros Comprezzo Aluminio Color Gris",
     "category": "colchones",
