@@ -2,6 +2,26 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-24",
+    "title": "Homer design Escritorio Oficina Madera con Cajones Reforzado",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDDO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-24/1-1o6r4b.webp",
+      "img/a-24/2-3f065z.webp",
+      "img/a-24/3-1d2z25.webp",
+      "img/a-24/4-0m5k1b.webp",
+      "img/a-24/5-180r28.webp",
+      "img/a-24/6-5p1r6h.webp",
+      "img/a-24/7-566v02.webp",
+      "img/a-24/8-0u2b2a.webp"
+    ],
+    "url": "https://meli.la/2eaqsaE"
+  },
+  {
     "code": "A-23",
     "title": "Homer Design Escritorio Multifuncional 140cm Color Blanco",
     "category": "colchones",
