@@ -2,6 +2,21 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-28",
+    "title": "Escritorio Gamer 100x60x74cm Base Acero Cubierta Melamina",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-28/1-2z6509.webp",
+      "img/a-28/2-300s15.webp",
+      "img/a-28/3-663s1n.webp"
+    ],
+    "url": "https://meli.la/23hU4Zd"
+  },
+  {
     "code": "A-27",
     "title": "Escritorio Gamer Con Luces 120x60x73cm",
     "category": "colchones",
