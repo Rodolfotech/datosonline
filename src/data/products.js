@@ -13,7 +13,7 @@ export const products = [
       "img/a-21/1-452l3f.webp",
       "img/a-21/2-3t1i04.webp"
     ],
-    "url": "https://meli.la/2uCg6PG"
+    "url": "https://meli.la/1EdhgNR"
   },
   {
     "code": "A-20",
