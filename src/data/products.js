@@ -2,6 +2,20 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-25",
+    "title": "Olla A Presión Fantuzzi 10 Litros Comprezzo Aluminio Color Gris",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-25/1-0l1x2i.webp",
+      "img/a-25/2-000g5n.webp"
+    ],
+    "url": "https://meli.la/18iYVQC"
+  },
+  {
     "code": "A-24",
     "title": "Homer design Escritorio Oficina Madera con Cajones Reforzado",
     "category": "colchones",
