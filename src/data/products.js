@@ -2,6 +2,21 @@
 // whole file and can only read it back while it keeps this format.
 export const products = [
   {
+    "code": "A-22",
+    "title": "Toldo 3x3 M",
+    "category": "colchones",
+    "badge": {
+      "label": "RECOMENDADO",
+      "tone": "hot"
+    },
+    "images": [
+      "img/a-22/1-135g28.webp",
+      "img/a-22/2-1o2326.webp",
+      "img/a-22/3-1q5046.webp"
+    ],
+    "url": "https://meli.la/33oCLgR"
+  },
+  {
     "code": "A-21",
     "title": "Sabanas Cannon 2 Plazas 144 Hilos Full Diseño de la tela Malibú",
     "category": "colchones",
